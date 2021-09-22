@@ -13,10 +13,10 @@ const Sidebar = () => {
   const router = useRouter();
 
   return (
-    <div className="flex flex-col bg-sidebar dark:bg-sidebar-dark w-24 h-full items-center flex-shrink-0">
-      <div className="my-auto flex flex-col text-secondary text-3xl items-center gap-10 w-full relative">
+    <div className="flex flex-col bg-sidebar dark:bg-sidebar-dark w-16 h-full items-center flex-shrink-0">
+      <div className="my-auto flex flex-col text-secondary text-2xl items-center gap-10 w-full relative">
         <motion.div
-          className="h-10 w-1 left-0 absolute bg-inndigo"
+          className="h-6 w-1 left-0 absolute bg-inndigo"
           animate={
             router.pathname === "/app/messages"
               ? { top: 0 }
