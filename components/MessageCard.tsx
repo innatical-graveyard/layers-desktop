@@ -12,7 +12,7 @@ const MessageCard = () => {
         <p className="font-bold">Lleyton</p>
         <p className="font-light text-xs">Let's get to work!</p>
       </div>
-      <FontAwesomeIcon icon={faChevronRight} className="ml-auto" />
+      <FontAwesomeIcon icon={faChevronRight} className="ml-auto mr-3" />
     </div>
   );
 };

@@ -16,7 +16,7 @@ const Login = () => {
         onSubmit={() => {}}
       >
         {({ isSubmitting }) => (
-          <Form className="flex flex-col m-auto p-10 rounded-lg shadow-md w-1/3">
+          <Form className="flex flex-col m-auto p-10 rounded-lg shadow-md w-1/4">
             <h1 className="text-2xl font-bold mb-3">Octii</h1>
             <label htmlFor="email" className="font-light font-sm mb-1">
               Email
@@ -25,7 +25,7 @@ const Login = () => {
               type="email"
               name="email"
               id="email"
-              className="p-3 rounded-lg"
+              className="p-3 rounded-lg bg-input-elements dark:bg-input-elements-dark"
             />
             <ErrorMessage name="email" component="p" className="text-red-500" />
 
@@ -36,7 +36,7 @@ const Login = () => {
               type="password"
               name="password"
               id="password"
-              className="p-3 rounded-lg"
+              className="p-3 rounded-lg bg-input-elements dark:bg-input-elements-dark"
             />
             <ErrorMessage
               name="password"

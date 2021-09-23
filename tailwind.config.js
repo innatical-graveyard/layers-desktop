@@ -3,6 +3,9 @@ module.exports = {
   darkMode: "media", // or 'media' or 'class'
   theme: {
     extend: {
+      spacing: {
+        18: "4.5rem",
+      },
       colors: {
         inndigo: {
           DEFAULT: "#1e6feb",
@@ -22,6 +25,10 @@ module.exports = {
           DEFAULT: "#FFFFFF",
           dark: "#272727",
         },
+        "primary-sidebar-selected": {
+          DEFAULT: "#EFEFEF",
+          dark: "#343434",
+        },
         text: {
           DEFAULT: "000000",
           dark: "#F5F5F5",
@@ -33,6 +40,10 @@ module.exports = {
         "servers-sidebar": {
           DEFAULT: "#FEFEFE",
           dark: "#191919",
+        },
+        "input-elements": {
+          DEFAULT: "#FFFFFF",
+          dark: "#272727",
         },
       },
     },
