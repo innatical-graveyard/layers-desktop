@@ -13,17 +13,17 @@ const Sidebar = () => {
   const router = useRouter();
 
   return (
-    <div className="flex flex-col bg-sidebar dark:bg-sidebar-dark w-16 h-full items-center flex-shrink-0">
-      <div className="my-auto flex flex-col text-secondary text-2xl items-center gap-10 w-full relative">
+    <div className="flex flex-col bg-sidebar dark:bg-sidebar-dark w-12 h-full items-center flex-shrink-0">
+      <div className="my-auto flex flex-col text-secondary text-2xl items-center gap-20 w-full relative">
         <motion.div
           className="h-6 w-1 left-0 absolute bg-inndigo"
           animate={
             router.pathname === "/app/messages"
               ? { top: 0 }
               : router.pathname === "/app/store"
-              ? { top: 75 }
+              ? { top: 114 }
               : router.pathname === "/app/servers"
-              ? { top: 150 }
+              ? { top: 228 }
               : {}
           }
         ></motion.div>
@@ -58,7 +58,7 @@ const Sidebar = () => {
       </div>
       <img
         src="https://cdn.discordapp.com/attachments/888219204417896488/890094423617204254/Screen_Shot_2021-09-21_at_11.37.25_PM.png"
-        className="rounded-lg object-cover w-12 h-12 mb-3"
+        className="rounded-md object-cover w-6 h-6 mb-3"
       />
     </div>
   );
