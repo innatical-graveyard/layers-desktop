@@ -58,7 +58,7 @@ const Sidebar = () => {
       </div>
       <img
         src="https://cdn.discordapp.com/attachments/888219204417896488/890094423617204254/Screen_Shot_2021-09-21_at_11.37.25_PM.png"
-        className="rounded-md object-cover w-6 h-6 mb-3"
+        className="rounded-md object-cover w-8 h-8 mb-3"
       />
     </div>
   );
