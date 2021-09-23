@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ServersSidebar from "../../components/ServersSidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faHashtag } from "@fortawesome/free-solid-svg-icons";
 import ChannelView from "../../components/ChannelView";
+import { useAuthedPage } from "../../util/auth";
 
 const Servers = () => {
+  useAuthedPage();
   const [selected, setSelected] = useState<string>("general");
   return (
     <>

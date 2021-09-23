@@ -2,8 +2,15 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import Link from "next/link";
 import * as yup from "yup";
 import { Keychain, SymmetricKey } from "@innatical/inncryption";
+import { trpc } from "../../util/trpc";
+import Auth, { usePublicOnlyPage } from "../../util/auth";
 
 const Register = () => {
+  usePublicOnlyPage();
+
+  const { setToken, setKeychain } = Auth.useContainer();
+  const register = trpc.useMutation("users.register");
+
   return (
     <div className="h-screen flex">
       <Formik
@@ -18,11 +25,39 @@ const Register = () => {
             .min(3, "Too short, username must be at least 3 characters.")
             .max(16, "Too long, username must be under 16 characters."),
         })}
-        onSubmit={async (values) => {
+        onSubmit={async (values, { setErrors }) => {
           const keychain = await Keychain.generate();
 
           const salt = SymmetricKey.generateSalt();
-          const key = SymmetricKey.generateFromPassword(values.password, salt);
+          const key = await SymmetricKey.generateFromPassword(
+            values.password,
+            salt
+          );
+
+          const res = await register.mutateAsync({
+            username: values.username,
+            email: values.email,
+            encryptedKeychain: await key.encrypt(await keychain.toJWKChain()),
+            publicKeychain: await keychain.toJWKPublicChain(),
+            salt,
+          });
+
+          if (!res.ok) {
+            switch (res.error) {
+              case "UsernameTaken":
+                return setErrors({
+                  username: "This username is already in use",
+                });
+              case "EmailInUse":
+                return setErrors({
+                  email: "This email is already in use",
+                });
+              default:
+                return;
+            }
+          }
+          setToken(res.token);
+          setKeychain(keychain);
         }}
       >
         {({ isSubmitting }) => (

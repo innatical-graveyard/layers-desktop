@@ -1,19 +1,95 @@
+import {
+  JsonWebKeyChain,
+  Keychain,
+  SignedMessage,
+  SymmetricKey,
+} from "@innatical/inncryption";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Link from "next/link";
 import * as yup from "yup";
+import { usePublicOnlyPage } from "../../util/auth";
+import { client, trpc } from "../../util/trpc";
+import Auth from "../../util/auth";
 
 const Login = () => {
+  usePublicOnlyPage();
+
+  const { setToken, setKeychain } = Auth.useContainer();
+
+  const login = trpc.useMutation("users.login");
+
   return (
     <div className="h-screen flex">
       <Formik
         initialValues={{ email: "", password: "" }}
-        validationSchema={{
+        validationSchema={yup.object().shape({
           email: yup.string().email("Invalid email"),
           password: yup
             .string()
             .min(8, "Too short, password must be at least 8 characters."),
+        })}
+        onSubmit={async (values, { setErrors }) => {
+          const challange = await client.query("users.challenge", {
+            email: values.email,
+          });
+
+          if (!challange.ok) {
+            switch (challange.error) {
+              case "UserNotFound":
+                setErrors({
+                  email: "A user with that email could not be found",
+                });
+              default:
+                return;
+            }
+          }
+
+          const key = await SymmetricKey.generateFromPassword(
+            values.password,
+            challange.salt
+          );
+
+          let signed: SignedMessage;
+          let keychain: Keychain;
+
+          try {
+            keychain = await Keychain.fromJWKChain(
+              (await key.decrypt(
+                challange.encryptedKeychain
+              )) as JsonWebKeyChain
+            );
+
+            signed = await keychain.signing.sign(challange.challenge);
+          } catch {
+            setErrors({
+              password: "Invalid password",
+            });
+            return;
+          }
+
+          const res = await login.mutateAsync({
+            email: values.email,
+            signedChallenge: signed,
+          });
+
+          if (!res.ok) {
+            switch (res.error) {
+              case "UserNotFound":
+                setErrors({
+                  email: "A user with that email could not be found",
+                });
+              case "InvalidSignature":
+                setErrors({
+                  password: "Invalid password",
+                });
+              default:
+                return;
+            }
+          }
+
+          setToken(res.token);
+          setKeychain(keychain);
         }}
-        onSubmit={() => {}}
       >
         {({ isSubmitting }) => (
           <Form className="flex flex-col m-auto p-10 rounded-lg shadow-md w-1/4">

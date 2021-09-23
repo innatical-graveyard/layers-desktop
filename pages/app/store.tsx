@@ -1,7 +1,9 @@
 import React from "react";
-import Sidebar from "../../components/Sidebar";
+import { useAuthedPage } from "../../util/auth";
 
 const Store = () => {
+  useAuthedPage();
+
   return <></>;
 };
 

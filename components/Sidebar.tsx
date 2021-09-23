@@ -8,9 +8,11 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
+import { trpc } from "../util/trpc";
 
 const Sidebar = () => {
   const router = useRouter();
+  const query = trpc.useQuery(["users.me"]);
 
   return (
     <div className="flex flex-col bg-sidebar dark:bg-sidebar-dark w-18 h-full items-center flex-shrink-0">
@@ -57,7 +59,7 @@ const Sidebar = () => {
         </Link>
       </div>
       <img
-        src="https://cdn.discordapp.com/attachments/888219204417896488/890094423617204254/Screen_Shot_2021-09-21_at_11.37.25_PM.png"
+        src={query.data?.ok ? query.data.user.avatar : ""}
         className="rounded-lg object-cover w-10 h-10 mb-5"
       />
     </div>
