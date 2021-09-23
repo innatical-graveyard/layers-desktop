@@ -32,5 +32,5 @@ export default withTRPC<App>({
       },
     };
   },
-  ssr: true,
+  ssr: false,
 })(Layers);

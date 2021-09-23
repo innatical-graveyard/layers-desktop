@@ -1,8 +1,7 @@
 import { createReactQueryHooks, createTRPCClient } from "@trpc/react";
 import type { App } from "../../layers-backend/resources/_app";
 
-export const url =
-  "https://abstract-centuries-yards-hartford.trycloudflare.com";
+export const url = "https://upgrading-thank-tops-gave.trycloudflare.com";
 export const trpc = createReactQueryHooks<App>();
 export const client = createTRPCClient<App>({
   url,
