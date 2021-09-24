@@ -62,7 +62,7 @@ const Register = () => {
       >
         {({ isSubmitting }) => (
           <Form className="flex flex-col m-auto p-10 rounded-lg shadow-md w-1/4">
-            <h1 className="text-2xl font-bold mb-3">Octii</h1>
+            <h1 className="text-2xl font-bold mb-3">Isometric Chat</h1>
             <label htmlFor="email" className="font-light font-sm mb-1">
               Email
             </label>
