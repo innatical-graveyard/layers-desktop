@@ -4,6 +4,7 @@ import {
   faPaperPlane,
   faStore,
   faServer,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -24,8 +25,10 @@ const Sidebar = () => {
               ? { top: 0 }
               : router.pathname === "/app/servers"
               ? { top: 110 }
-              : router.pathname === "/app/store"
+              : router.pathname === "/app/friends"
               ? { top: 210 }
+              : router.pathname === "/app/store"
+              ? { top: 315 }
               : {}
           }
         ></motion.div>
@@ -45,6 +48,16 @@ const Sidebar = () => {
               icon={faServer}
               className={
                 router.pathname === "/app/servers" ? "text-inndigo" : ""
+              }
+            />
+          </a>
+        </Link>
+        <Link href="/app/friends">
+          <a className="cursor-pointer">
+            <FontAwesomeIcon
+              icon={faUsers}
+              className={
+                router.pathname === "/app/friends" ? "text-inndigo" : ""
               }
             />
           </a>
