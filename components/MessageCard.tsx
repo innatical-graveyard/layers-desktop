@@ -1,19 +1,40 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { trpc } from "../util/trpc";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-const MessageCard = () => {
+const MessageCard: React.FC<{ userId: string; channelId: string }> = ({
+  userId,
+  channelId,
+}) => {
+  const user = trpc.useQuery(["users.user", { id: userId }]);
+  const router = useRouter();
+
   return (
-    <div className="flex gap-3 w-full items-center">
-      <img
-        src="https://cdn.discordapp.com/attachments/888219204417896488/890094423617204254/Screen_Shot_2021-09-21_at_11.37.25_PM.png"
-        className="rounded-xl object-cover w-12 h-12"
-      />
-      <div className="flex flex-col">
-        <p className="font-bold">Lleyton</p>
-        <p className="font-light text-xs">Let's get to work!</p>
-      </div>
-      <FontAwesomeIcon icon={faChevronRight} className="ml-auto mr-3" />
-    </div>
+    <Link href={"/app/messages/" + channelId}>
+      <a>
+        <div
+          className={
+            router.asPath === "/app/messages/" + channelId
+              ? "bg-inndigo flex gap-3 w-full items-center p-2 rounded-lg"
+              : "flex gap-3 w-full items-center p-2 rounded-lg"
+          }
+        >
+          <img
+            src={user.data?.ok ? user.data.user.avatar : ""}
+            className="rounded-xl object-cover w-12 h-12"
+          />
+          <div className="flex flex-col">
+            <p className="font-bold">
+              {user.data?.ok ? user.data.user.username : ""}
+            </p>
+            <p className="font-light text-xs">Let's get to work!</p>
+          </div>
+          <FontAwesomeIcon icon={faChevronRight} className="ml-auto mr-3" />
+        </div>
+      </a>
+    </Link>
   );
 };
 

@@ -45,11 +45,25 @@ module.exports = {
           DEFAULT: "#FFFFFF",
           dark: "#272727",
         },
+        "row-stripe": {
+          DEFAULT: "#F7F7F7",
+          dark: "#131313",
+        },
+        card: {
+          DEFAULT: "#FFFFFF",
+          dark: "#212121",
+        },
+        modal: {
+          DEFAULT: "#FFFFFF",
+          dark: "#212121",
+        },
       },
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ["odd"],
+    },
   },
   plugins: [],
 };

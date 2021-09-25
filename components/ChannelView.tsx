@@ -1,45 +1,76 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileUpload, faSmile } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import Message from "./Message";
+import { trpc } from "../util/trpc";
+import ChatBox from "./ChatBox";
+import { useAsync } from "react-use";
+import Auth from "../util/auth";
 
-const ChannelView = () => {
+const ChannelView: React.FC<{ id: string }> = ({ id }) => {
+  const { keychain } = Auth.useContainer();
+
+  const channel = trpc.useQuery(["channels.channel", { id }]);
+  const user = trpc.useQuery(
+    [
+      "users.user",
+      {
+        id:
+          channel.data?.ok && channel.data.type === "DM" ? channel.data.to : "",
+      },
+    ],
+    {
+      enabled: channel.data?.ok && channel.data.type === "DM",
+    }
+  );
+
+  const messages = trpc.useInfiniteQuery(["channels.messages", { id }]);
+
+  const sessionKey = useAsync(
+    async () =>
+      user.data?.ok
+        ? await keychain?.encryption.sessionKey(
+            user.data.user.publicKeychain.encryption
+          )
+        : undefined,
+    [user.data]
+  );
+
   return (
     <div className="flex flex-col w-full">
-      <div className="p-8 flex gap-3">
+      <div className="p-8 flex gap-3 items-center">
         <img
-          src="https://cdn.discordapp.com/attachments/888219204417896488/890094423617204254/Screen_Shot_2021-09-21_at_11.37.25_PM.png"
+          src={user.data?.ok ? user.data.user.avatar : ""}
           className="rounded-xl object-cover w-12 h-12"
         />
         <div>
           <h1 className="text-xl">
-            lleyton<span className="text-secondary">@innatical.com</span>
+            {user.data?.ok ? user.data.user.username : ""}
+            {/* lleyton<span className="text-secondary">@innatical.com</span> */}
           </h1>
-          <h2>Working on a new app</h2>
+          {/* <h2>Working on a new app</h2> */}
         </div>
       </div>
       <div className="flex-1 p-8 flex flex-col gap-3 py-0">
         <div className="mt-auto" />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
+        {sessionKey.value &&
+          messages.data?.pages.flatMap((page) =>
+            page.ok
+              ? page.messages.map((message) =>
+                  sessionKey.value ? (
+                    <Message
+                      author={message.author}
+                      sessionKey={sessionKey.value}
+                      payload={message.payload}
+                    />
+                  ) : (
+                    <></>
+                  )
+                )
+              : []
+          )}
       </div>
-      <div className="p-8 flex gap-3">
-        <input
-          type="text"
-          className="p-3 rounded-lg bg-chat-input-elements dark:bg-chat-input-elements-dark w-full"
-          placeholder="Say some dumb shit, idk"
-        />
-        <button className="p-3 bg-chat-input-elements dark:bg-chat-input-elements-dark rounded-lg">
-          <FontAwesomeIcon icon={faFileUpload} fixedWidth />
-        </button>
-        <button className="p-3 bg-chat-input-elements dark:bg-chat-input-elements-dark rounded-lg">
-          <FontAwesomeIcon icon={faSmile} fixedWidth />
-        </button>
-      </div>
+      {user.data?.ok && sessionKey.value && (
+        <ChatBox channelId={id} sessionKey={sessionKey.value} />
+      )}
     </div>
   );
 };
