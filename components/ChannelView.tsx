@@ -60,6 +60,7 @@ const ChannelView: React.FC<{ id: string }> = ({ id }) => {
                       author={message.author}
                       sessionKey={sessionKey.value}
                       payload={message.payload}
+                      createdAt={message.createdAt}
                     />
                   ) : (
                     <></>

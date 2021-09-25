@@ -4,14 +4,19 @@ import {
   SigningPair,
   SymmetricKey,
 } from "@innatical/inncryption";
+import dayjs from "dayjs";
+import calendar from "dayjs/plugin/calendar";
 import { useAsync } from "react-use";
 import { trpc } from "../util/trpc";
+
+dayjs.extend(calendar);
 
 const Message: React.FC<{
   payload: EncryptedMessage;
   sessionKey: SymmetricKey;
   author: string;
-}> = ({ author, payload, sessionKey }) => {
+  createdAt: string;
+}> = ({ author, payload, sessionKey, createdAt }) => {
   const user = trpc.useQuery([
     "users.user",
     {
@@ -47,7 +52,7 @@ const Message: React.FC<{
         <p className="font-bold">
           {user.data?.ok ? user.data.user.username : ""}{" "}
           <span className="text-secondary font-normal ml-2">
-            Today at 3:00am
+            {dayjs(createdAt).calendar()}
           </span>
         </p>
         <p>
