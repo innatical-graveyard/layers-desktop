@@ -40,7 +40,9 @@ const Sidebar = () => {
               <FontAwesomeIcon
                 icon={faPaperPlane}
                 className={
-                  router.pathname === "/app/messages" ? "text-inndigo" : ""
+                  router.pathname.startsWith("/app/messages")
+                    ? "text-inndigo"
+                    : ""
                 }
               />
             </a>

@@ -1,7 +1,7 @@
 import { createReactQueryHooks, createTRPCClient } from "@trpc/react";
 import type { App } from "../../layers-backend/resources/_app";
 
-export const url = "https://why-egyptian-cylinder-lift.trycloudflare.com";
+export const url = "http://localhost:3001";
 export const trpc = createReactQueryHooks<App>();
 export const client = createTRPCClient<App>({
   url,

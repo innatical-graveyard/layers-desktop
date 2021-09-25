@@ -1,4 +1,9 @@
-import { EncryptedMessage, SymmetricKey } from "@innatical/inncryption";
+import {
+  EncryptedMessage,
+  SignedMessage,
+  SigningPair,
+  SymmetricKey,
+} from "@innatical/inncryption";
 import { useAsync } from "react-use";
 import { trpc } from "../util/trpc";
 
@@ -15,8 +20,21 @@ const Message: React.FC<{
   ]);
 
   const message = useAsync(async () => {
-    return (await sessionKey.decrypt(payload)) as string;
-  }, [payload, sessionKey]);
+    if (user.data?.ok) {
+      const message = (await sessionKey.decrypt(payload)) as SignedMessage;
+      const unwrapped = await SigningPair.verify(
+        message,
+        user.data.user.publicKeychain.signing
+      );
+
+      console.log(unwrapped);
+      if (unwrapped.ok) {
+        return unwrapped.message as string;
+      } else {
+        return false;
+      }
+    }
+  }, [payload, sessionKey, user.data]);
 
   return (
     <div className="flex gap-3">
@@ -32,7 +50,17 @@ const Message: React.FC<{
             Today at 3:00am
           </span>
         </p>
-        <p>{message.value}</p>
+        <p>
+          {message.value !== undefined ? (
+            message.value === false ? (
+              <i>This message could not be decrypted or verfiied</i>
+            ) : (
+              message.value
+            )
+          ) : (
+            ""
+          )}
+        </p>
       </div>
     </div>
   );

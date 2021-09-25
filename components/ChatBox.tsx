@@ -9,6 +9,7 @@ const ChatBox: React.FC<{
   channelId: string;
   sessionKey: SymmetricKey;
 }> = ({ channelId, sessionKey }) => {
+  const { keychain } = Auth.useContainer();
   const sendMessage = trpc.useMutation("channels.send");
   const [text, setText] = useState("");
 
@@ -25,7 +26,9 @@ const ChatBox: React.FC<{
             setText("");
             await sendMessage.mutateAsync({
               id: channelId,
-              payload: await sessionKey.encrypt(text),
+              payload: await sessionKey.encrypt(
+                await keychain!.signing.sign(text)
+              ),
             });
           }
         }}
