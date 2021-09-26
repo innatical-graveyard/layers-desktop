@@ -77,7 +77,7 @@ const ChannelView: React.FC<{ id: string }> = ({ id }) => {
 
   return (
     <div className="flex flex-col w-full">
-      <div className="p-8 flex gap-3 items-center">
+      <div className="pt-8 px-8 flex gap-3 items-center">
         <img
           src={user.data?.ok ? user.data.user.avatar : ""}
           className="rounded-xl object-cover w-12 h-12"
@@ -112,6 +112,7 @@ const ChannelView: React.FC<{ id: string }> = ({ id }) => {
                   .reverse()
               : []
           )}
+        <div className="p-2" />
         <Waypoint onEnter={() => messages.fetchNextPage()} />
       </div>
       {user.data?.ok && sessionKey.value && (
