@@ -16,7 +16,7 @@ const ChatBox: React.FC<{
   const [emojiPicker, setEmojiPicker] = useState(false);
 
   return (
-    <div className="p-8 flex gap-3">
+    <div className="px-8 pb-8 flex gap-3">
       {emojiPicker && (
         <div
           id="emojiPicker"
@@ -34,7 +34,7 @@ const ChatBox: React.FC<{
       <input
         type="text"
         className="p-3 rounded-xl bg-chat-input-elements dark:bg-chat-input-elements-dark w-full"
-        placeholder="Say some dumb shit, idk"
+        placeholder="Say something amazing"
         value={text}
         onChange={(e) => setText(e.target.value)}
         onKeyDown={async (e) => {

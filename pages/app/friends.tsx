@@ -25,7 +25,7 @@ const Friends = () => {
           <>
             <div className="flex flex-col">
               {friends.data.friends.map((id) => (
-                <FriendCard userId={id} type="friend" />
+                <FriendCard key={id} userId={id} type="friend" />
               ))}
             </div>
 
@@ -34,7 +34,7 @@ const Friends = () => {
             )}
             <div className="flex flex-col">
               {friends.data.incoming.map((id) => (
-                <FriendCard userId={id} type="incoming" />
+                <FriendCard key={id} userId={id} type="incoming" />
               ))}
             </div>
 
@@ -43,7 +43,7 @@ const Friends = () => {
             )}
             <div className="flex flex-col">
               {friends.data.outgoing.map((id) => (
-                <FriendCard userId={id} type="outgoing" />
+                <FriendCard key={id} userId={id} type="outgoing" />
               ))}
             </div>
           </>

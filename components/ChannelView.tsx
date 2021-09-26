@@ -91,6 +91,7 @@ const ChannelView: React.FC<{ id: string }> = ({ id }) => {
         </div>
       </div>
       <div className="flex-1 p-8 flex py-0 overflow-y-auto flex-col-reverse mt-auto">
+        <div className="p-2" />
         {sessionKey.value &&
           messages.data?.pages?.flatMap((page) =>
             page.ok

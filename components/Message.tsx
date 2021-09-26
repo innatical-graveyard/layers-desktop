@@ -41,7 +41,7 @@ const Message: React.FC<{
   }, [payload, sessionKey, user.data]);
 
   return (
-    <div className="flex gap-3 my-1">
+    <div className="flex gap-3 my-2">
       <img
         src={user.data?.ok ? user.data.user.avatar : ""}
         className="rounded-xl object-cover w-12 h-12"
