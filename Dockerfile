@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 
 # install dependencies
-RUN apt install -y zlib1g
+RUN apk add zlib
 RUN yarn install --frozen-lockfile
 
 COPY . .
