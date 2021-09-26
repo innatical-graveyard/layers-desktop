@@ -1,5 +1,12 @@
 FROM node:alpine as BUILD_IMAGE
 
+RUN apk add git
+RUN git clone https://github.com/innatical/layers-backend.git /layers-backend
+
+WORKDIR /layers-backend
+
+RUN yarn install --frozen-lockfile
+
 WORKDIR /app
 
 COPY package.json yarn.lock ./
