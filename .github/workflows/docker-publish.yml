@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Update Packages
-        run: sudo apt install -y zlib
+        run: sudo apt install -y zlib1g
         
       - name: Checkout repository
         uses: actions/checkout@v2
