@@ -8,7 +8,7 @@ import { useAuthedPage } from "../../util/auth";
 const Servers = () => {
   useAuthedPage();
   const [selected, setSelected] = useState<string>("general");
-  if (process.env.NODE_ENV !== "development") {
+  if (process.env.NODE_ENV === "development") {
     return (
       <>
         <ServersSidebar />
