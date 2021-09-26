@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 
 # install dependencies
-RUN apk add zlib-dev
+RUN apk add libc6-compat
 RUN yarn install --frozen-lockfile
 
 COPY . .
