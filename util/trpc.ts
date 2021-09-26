@@ -4,8 +4,8 @@ import { createWSClient, wsLink } from "@trpc/client/links/wsLink";
 import { splitLink } from "@trpc/client/links/splitLink";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 
-export const url = "http://localhost:3001";
-export const wsUrl = "ws://localhost:3001";
+export const url = "https://api.layers.innatical.com";
+export const wsUrl = "wss://gateway.layers.innatical.com";
 export const trpc = createReactQueryHooks<App>();
 
 export let links: TRPCLink<any>[];
