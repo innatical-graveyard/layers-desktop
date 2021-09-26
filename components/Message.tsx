@@ -32,7 +32,6 @@ const Message: React.FC<{
         user.data.user.publicKeychain.signing
       );
 
-      console.log(unwrapped);
       if (unwrapped.ok) {
         return unwrapped.message as string;
       } else {
@@ -42,7 +41,7 @@ const Message: React.FC<{
   }, [payload, sessionKey, user.data]);
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 my-1">
       <img
         src={user.data?.ok ? user.data.user.avatar : ""}
         className="rounded-xl object-cover w-12 h-12"
@@ -51,7 +50,7 @@ const Message: React.FC<{
       <div className="flex flex-col">
         <p className="font-bold">
           {user.data?.ok ? user.data.user.username : ""}{" "}
-          <span className="text-secondary font-normal ml-2">
+          <span className="text-secondary font-normal text-xs ml-2">
             {dayjs(createdAt).calendar()}
           </span>
         </p>

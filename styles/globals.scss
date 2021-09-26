@@ -5,3 +5,26 @@
 body {
   @apply bg-background dark:bg-background-dark text-text dark:text-text-dark;
 }
+
+#emojiPicker {
+  aside {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 10px !important;
+
+    input {
+      border: none !important;
+      @apply bg-background dark:bg-background-dark text-text dark:text-text-dark;
+    }
+
+    ul::before {
+      @apply bg-chat-input-elements dark:bg-chat-input-elements-dark text-text dark:text-text-dark;
+    }
+
+    button {
+      @apply text-text dark:text-text-dark;
+    }
+
+    @apply bg-chat-input-elements dark:bg-chat-input-elements-dark text-text dark:text-text-dark;
+  }
+}

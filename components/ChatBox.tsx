@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileUpload, faSmile } from "@fortawesome/free-solid-svg-icons";
 import { trpc } from "../util/trpc";
-import { useState } from "react";
+import React, { useState } from "react";
 import Auth from "../util/auth";
 import { SymmetricKey } from "@innatical/inncryption";
+import Picker from "emoji-picker-react";
 
 const ChatBox: React.FC<{
   channelId: string;
@@ -12,12 +13,27 @@ const ChatBox: React.FC<{
   const { keychain } = Auth.useContainer();
   const sendMessage = trpc.useMutation("channels.send");
   const [text, setText] = useState("");
+  const [emojiPicker, setEmojiPicker] = useState(false);
 
   return (
     <div className="p-8 flex gap-3">
+      {emojiPicker && (
+        <div
+          id="emojiPicker"
+          className="absolute bottom-24 right-8 shadow-none"
+        >
+          <Picker
+            onEmojiClick={(_, data) => {
+              setText(text + ` ${data.emoji}`);
+            }}
+            native
+          />
+        </div>
+      )}
+
       <input
         type="text"
-        className="p-3 rounded-lg bg-chat-input-elements dark:bg-chat-input-elements-dark w-full"
+        className="p-3 rounded-xl bg-chat-input-elements dark:bg-chat-input-elements-dark w-full"
         placeholder="Say some dumb shit, idk"
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -33,10 +49,13 @@ const ChatBox: React.FC<{
           }
         }}
       />
-      <button className="p-3 bg-chat-input-elements dark:bg-chat-input-elements-dark rounded-lg">
+      <button className="p-3 bg-chat-input-elements dark:bg-chat-input-elements-dark rounded-xl">
         <FontAwesomeIcon icon={faFileUpload} fixedWidth />
       </button>
-      <button className="p-3 bg-chat-input-elements dark:bg-chat-input-elements-dark rounded-lg">
+      <button
+        className="p-3 bg-chat-input-elements dark:bg-chat-input-elements-dark rounded-xl"
+        onClick={() => setEmojiPicker(!emojiPicker)}
+      >
         <FontAwesomeIcon icon={faSmile} fixedWidth />
       </button>
     </div>

@@ -19,6 +19,7 @@
     "@trpc/next": "^9.7.0",
     "@trpc/react": "^9.7.0",
     "dayjs": "^1.10.7",
+    "emoji-picker-react": "lleyton/emoji-picker-react",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "next": "latest",
@@ -26,6 +27,7 @@
     "react-dom": "^17.0.2",
     "react-query": "^3.24.4",
     "react-use": "^17.3.1",
+    "react-waypoint": "^10.1.0",
     "sass": "^1.42.1",
     "yup": "^0.32.9"
   },

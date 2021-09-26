@@ -1,12 +1,17 @@
 import React from "react";
 import Message from "./Message";
 import { trpc } from "../util/trpc";
-import ChatBox from "./ChatBox";
 import { useAsync } from "react-use";
 import Auth from "../util/auth";
+import dynamic from "next/dynamic";
+import { Waypoint } from "react-waypoint";
+
+const ChatBox = dynamic(() => import("./ChatBox"), {
+  ssr: false,
+});
 
 const ChannelView: React.FC<{ id: string }> = ({ id }) => {
-  const { keychain } = Auth.useContainer();
+  const { keychain, token } = Auth.useContainer();
 
   const channel = trpc.useQuery(["channels.channel", { id }]);
   const user = trpc.useQuery(
@@ -22,7 +27,43 @@ const ChannelView: React.FC<{ id: string }> = ({ id }) => {
     }
   );
 
-  const messages = trpc.useInfiniteQuery(["channels.messages", { id }]);
+  const utils = trpc.useContext();
+  const messages = trpc.useInfiniteQuery(["channels.messages", { id }], {
+    getNextPageParam(current) {
+      if (!current.ok) return;
+      return current.messages[0]?.id;
+    },
+  });
+
+  trpc.useSubscription(["channels.channel", { id, token: token! }], {
+    onNext(e) {
+      // TRPC doesn't allow you to get infinite queries the normal way so :/
+      const query = utils.queryClient.getQueryData([
+        "channels.messages",
+        { id },
+        "TRPC_INFINITE_QUERY",
+      ]) as any;
+
+      switch (e.type) {
+        case "message": {
+          utils.queryClient.setQueryData(
+            ["channels.messages", { id }, "TRPC_INFINITE_QUERY"],
+            {
+              ...query,
+              pages: [
+                {
+                  ...query.pages[0],
+                  messages: [...query.pages[0].messages, e],
+                  ok: true,
+                },
+              ],
+            }
+          );
+          break;
+        }
+      }
+    },
+  });
 
   const sessionKey = useAsync(
     async () =>
@@ -49,25 +90,28 @@ const ChannelView: React.FC<{ id: string }> = ({ id }) => {
           {/* <h2>Working on a new app</h2> */}
         </div>
       </div>
-      <div className="flex-1 p-8 flex flex-col gap-3 py-0">
-        <div className="mt-auto" />
+      <div className="flex-1 p-8 flex py-0 overflow-y-auto flex-col-reverse mt-auto">
         {sessionKey.value &&
-          messages.data?.pages.flatMap((page) =>
+          messages.data?.pages?.flatMap((page) =>
             page.ok
-              ? page.messages.map((message) =>
-                  sessionKey.value ? (
-                    <Message
-                      author={message.author}
-                      sessionKey={sessionKey.value}
-                      payload={message.payload}
-                      createdAt={message.createdAt}
-                    />
-                  ) : (
-                    <></>
+              ? page.messages
+                  .map((message) =>
+                    sessionKey.value ? (
+                      <Message
+                        key={message.id}
+                        author={message.author}
+                        sessionKey={sessionKey.value}
+                        payload={message.payload}
+                        createdAt={message.createdAt}
+                      />
+                    ) : (
+                      <></>
+                    )
                   )
-                )
+                  .reverse()
               : []
           )}
+        <Waypoint onEnter={() => messages.fetchNextPage()} />
       </div>
       {user.data?.ok && sessionKey.value && (
         <ChatBox channelId={id} sessionKey={sessionKey.value} />

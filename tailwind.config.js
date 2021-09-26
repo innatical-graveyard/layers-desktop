@@ -1,6 +1,7 @@
 module.exports = {
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: "media", // or 'media' or 'class'
+  important: true,
   theme: {
     extend: {
       spacing: {
@@ -30,7 +31,7 @@ module.exports = {
           dark: "#343434",
         },
         text: {
-          DEFAULT: "000000",
+          DEFAULT: "#000000",
           dark: "#F5F5F5",
         },
         "chat-input-elements": {

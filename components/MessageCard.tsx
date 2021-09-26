@@ -17,8 +17,8 @@ const MessageCard: React.FC<{ userId: string; channelId: string }> = ({
         <div
           className={
             router.asPath === "/app/messages/" + channelId
-              ? "bg-inndigo flex gap-3 w-full items-center p-2 rounded-lg"
-              : "flex gap-3 w-full items-center p-2 rounded-lg"
+              ? "bg-primary-sidebar-selected dark:bg-primary-sidebar-selected-dark flex gap-3 w-full items-center p-2 rounded-xl"
+              : "flex gap-3 w-full items-center p-2 rounded-xl"
           }
         >
           <img
