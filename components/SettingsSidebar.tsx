@@ -3,15 +3,19 @@ import {
   faUser,
   faPaintBrush,
   faShieldAlt,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import Auth from "../util/auth";
 
 const SettingsSidebar = () => {
+  const { setToken, setKeychain } = Auth.useContainer();
+
   return (
-    <div className="w-72 bg-primary-sidebar dark:bg-primary-sidebar-dark p-5 h-full">
+    <div className="w-72 bg-primary-sidebar dark:bg-primary-sidebar-dark p-5 h-full flex flex-col">
       <h1 className="text-2xl font-bold mb-5">Settings</h1>
-      <div className="flex flex-col gap-5 w-64 bg-primary-sidebar dark:bg-primary-sidebar-dark">
+      <div className="flex flex-col gap-5 w-64 bg-primary-sidebar dark:bg-primary-sidebar-dark flex-1">
         <Link href="/app/settings/user">
           <a>
             <div className="flex gap-3 w-full items-center">
@@ -43,6 +47,20 @@ const SettingsSidebar = () => {
           </div>
           <FontAwesomeIcon icon={faChevronRight} className="ml-auto mr-3" />
         </div>
+        <button
+          className="flex gap-3 w-full items-center"
+          onClick={() => {
+            setToken(null);
+            setKeychain(null);
+          }}
+        >
+          <div className="rounded-xl w-9 h-9 flex items-center justify-center bg-red-500">
+            <FontAwesomeIcon icon={faSignOutAlt} />
+          </div>
+          <div className="flex flex-col">
+            <p className="font-medium">Logout</p>
+          </div>
+        </button>
       </div>
     </div>
   );

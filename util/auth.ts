@@ -4,20 +4,27 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const useAuth = () => {
-  const [token, setToken] = useState<string>();
-  const [keychain, setKeychain] = useState<Keychain>();
+  const [token, setToken] = useState<string | null>();
+  const [keychain, setKeychain] = useState<Keychain | null>();
 
   useEffect(() => {
-    if (token) localStorage.setItem("token", token);
+    if (token) {
+      localStorage.setItem("token", token);
+    } else if (keychain === null) {
+      localStorage.removeItem("token");
+    }
   }, [token]);
 
   useEffect(() => {
     (async () => {
-      if (keychain)
+      if (keychain) {
         localStorage.setItem(
           "keychain",
           JSON.stringify(await keychain.toJWKChain())
         );
+      } else if (keychain === null) {
+        localStorage.removeItem("keychain");
+      }
     })();
   }, [keychain]);
 
