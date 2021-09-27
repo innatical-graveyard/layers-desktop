@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import Message from "./Message";
 import { trpc } from "../util/trpc";
 import { useAsync } from "react-use";
@@ -10,7 +10,10 @@ const ChatBox = dynamic(() => import("./ChatBox"), {
   ssr: false,
 });
 
-const ChannelView: React.FC<{ id: string }> = ({ id }) => {
+const ChannelView: React.FC<{
+  id: string;
+  backButton?: () => JSX.Element | undefined;
+}> = ({ id, backButton: BackButton }) => {
   const { keychain, token } = Auth.useContainer();
 
   const channel = trpc.useQuery(["channels.channel", { id }]);
@@ -78,6 +81,8 @@ const ChannelView: React.FC<{ id: string }> = ({ id }) => {
   return (
     <div className="flex flex-col w-full">
       <div className="pt-8 px-8 flex gap-3 items-center">
+        {BackButton && <BackButton />}
+
         <img
           src={user.data?.ok ? user.data.user.avatar : ""}
           className="rounded-xl object-cover w-12 h-12"
