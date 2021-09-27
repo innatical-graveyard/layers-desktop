@@ -12,7 +12,7 @@ export let links: TRPCLink<any>[];
 
 if (globalThis.window) {
   const wsClient = createWSClient({
-    url: `ws://localhost:3002`,
+    url: wsUrl,
   });
 
   links = [
