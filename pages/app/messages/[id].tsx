@@ -18,8 +18,6 @@ const Chat = () => {
         sidebar={MessagesSidebar}
         backUrl="/app/messages"
       />
-      {/* <MessagesSidebar />
-      <ChannelView id={router.query["id"] as string} /> */}
     </>
   );
 };

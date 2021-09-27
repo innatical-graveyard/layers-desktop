@@ -1,5 +1,6 @@
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import React from "react";
 
 export const NavigationStack: React.FC<{
@@ -18,12 +19,11 @@ export const NavigationStack: React.FC<{
       <Content
         backButton={() => {
           return (
-            <a
-              href={backUrl}
-              className="sm:hidden p-3 bg-chat-input-elements dark:bg-chat-input-elements-dark rounded-xl"
-            >
-              <FontAwesomeIcon icon={faAngleLeft} fixedWidth />
-            </a>
+            <Link href={backUrl}>
+              <div className="sm:hidden p-3 bg-chat-input-elements dark:bg-chat-input-elements-dark rounded-xl">
+                <FontAwesomeIcon icon={faAngleLeft} fixedWidth />
+              </div>
+            </Link>
           );
         }}
       />
