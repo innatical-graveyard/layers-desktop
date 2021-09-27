@@ -27,7 +27,7 @@ const Sidebar = () => {
               ? { top: 0, bottom: 165 }
               : router.pathname === "/app/friends"
               ? { top: 45, bottom: 0 }
-              : router.pathname === "/app/store"
+              : router.pathname.startsWith("/app/store")
               ? { top: 250, bottom: 0 }
               : router.pathname.startsWith("/app/settings")
               ? { top: "100%", bottom: 80 }
