@@ -10,7 +10,10 @@ const ChatBox = dynamic(() => import("./ChatBox"), {
   ssr: false,
 });
 
-const ChannelView: React.FC<{ id: string }> = ({ id }) => {
+const ChannelView: React.FC<{
+  id: string;
+  backButton: () => JSX.Element;
+}> = ({ id, backButton: BackButton }) => {
   const { keychain, token } = Auth.useContainer();
 
   const channel = trpc.useQuery(["channels.channel", { id }]);
@@ -91,6 +94,8 @@ const ChannelView: React.FC<{ id: string }> = ({ id }) => {
   return (
     <div className="flex flex-col w-full">
       <div className="pt-8 pb-2 px-8 flex gap-3 items-center">
+        <BackButton />
+
         {user.data?.ok ? (
           <img
             src={user.data.user.avatar}
