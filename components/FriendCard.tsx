@@ -5,6 +5,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import { trpc } from "../util/trpc";
 
@@ -13,6 +14,7 @@ const FriendCard: React.FC<{
   type: "friend" | "incoming" | "outgoing";
 }> = ({ userId, type }) => {
   const user = trpc.useQuery(["users.user", { id: userId }]);
+  const router = useRouter();
 
   const addFriend = trpc.useMutation("users.addFriend");
   const removeFriend = trpc.useMutation("users.removeFriend");
@@ -31,8 +33,11 @@ const FriendCard: React.FC<{
   }, [userId]);
 
   const messageCb = useCallback(async () => {
-    await getDMChannel.mutateAsync({ id: userId });
-    await utils.invalidateQuery(["users.getDMChannels"]);
+    const channel = await getDMChannel.mutateAsync({ id: userId });
+    if (channel.ok) {
+      await utils.invalidateQuery(["users.getDMChannels"]);
+      router.push("/app/messages/" + channel.id);
+    }
   }, [userId]);
 
   return (
