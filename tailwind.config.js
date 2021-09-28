@@ -58,6 +58,10 @@ module.exports = {
           DEFAULT: "#FFFFFF",
           dark: "#212121",
         },
+        placeholder: {
+          DEFAULT: "#FFFFFF",
+          dark: "#272727",
+        },
       },
     },
   },

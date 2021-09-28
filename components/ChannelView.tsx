@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+
+import React, { FC, useMemo } from "react";
 import Message from "./Message";
 import { trpc } from "../util/trpc";
 import { useAsync } from "react-use";
@@ -68,6 +69,14 @@ const ChannelView: React.FC<{
     },
   });
 
+  const messagesList = useMemo(
+    () =>
+      messages.data?.pages.flatMap((page) =>
+        page.ok ? [...page.messages].reverse() : []
+      ),
+    [messages.data]
+  );
+
   const sessionKey = useAsync(
     async () =>
       user.data?.ok
@@ -78,51 +87,64 @@ const ChannelView: React.FC<{
     [user.data]
   );
 
+  const usernamePlaceholderWidth = useMemo(
+    () => Math.random() * (20 - 10) + 10,
+    []
+  );
+
   return (
     <div className="flex flex-col w-full">
-      <div className="pt-8 px-8 flex gap-3 items-center">
-        {BackButton && <BackButton />}
+      <div className="pt-8 pb-2 px-8 flex gap-3 items-center">
+         {BackButton && <BackButton />}
+        
+        {user.data?.ok ? (
+          <img
+            src={user.data.user.avatar}
+            className="rounded-xl object-cover w-12 h-12"
+          />
+        ) : (
+          <div className="animate-pulse rounded-xl w-12 h-12 bg-placeholder dark:bg-placeholder-dark" />
+        )}
 
-        <img
-          src={user.data?.ok ? user.data.user.avatar : ""}
-          className="rounded-xl object-cover w-12 h-12"
-        />
-        <div>
-          <h1 className="text-xl">
-            {user.data?.ok ? user.data.user.username : ""}
-            {/* lleyton<span className="text-secondary">@innatical.com</span> */}
-          </h1>
+        <div className="w-full">
+          {user.data?.ok ? (
+            <h1 className="text-xl font-bold">{user.data.user.username}</h1>
+          ) : (
+            <div
+              className="animate-pulse rounded h-5 bg-placeholder dark:bg-placeholder-dark"
+              style={{ width: usernamePlaceholderWidth + "%" }}
+            />
+          )}
+          {/* lleyton<span className="text-secondary">@innatical.com</span> */}
           {/* <h2>Working on a new app</h2> */}
         </div>
       </div>
       <div className="flex-1 p-8 flex py-0 overflow-y-auto flex-col-reverse mt-auto">
-        <div className="p-2" />
+        <div className="p-3" />
         {sessionKey.value &&
-          messages.data?.pages?.flatMap((page) =>
-            page.ok
-              ? page.messages
-                  .map((message) =>
-                    sessionKey.value ? (
-                      <Message
-                        key={message.id}
-                        author={message.author}
-                        sessionKey={sessionKey.value}
-                        payload={message.payload}
-                        createdAt={message.createdAt}
-                      />
-                    ) : (
-                      <></>
-                    )
-                  )
-                  .reverse()
-              : []
-          )}
+          messagesList?.map((message, index) => (
+            <Message
+              {...message}
+              sessionKey={sessionKey.value!}
+              primary={
+                index < messagesList.length - 1 &&
+                messagesList[index + 1].author === message.author &&
+                new Date(message.createdAt).valueOf() -
+                  new Date(messagesList[index + 1].createdAt).valueOf() <
+                  600000
+                  ? false
+                  : true
+              }
+            />
+          ))}
         <div className="p-2" />
+        <h2 className="font-bold text-xl">
+          Woah! You reached the top of your chat with{" "}
+          {user.data?.ok ? user.data?.user?.username : ""}. Here’s a cookie 🍪.
+        </h2>
         <Waypoint onEnter={() => messages.fetchNextPage()} />
       </div>
-      {user.data?.ok && sessionKey.value && (
-        <ChatBox channelId={id} sessionKey={sessionKey.value} />
-      )}
+      <ChatBox channelId={id} sessionKey={sessionKey.value} />
     </div>
   );
 };

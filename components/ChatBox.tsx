@@ -8,7 +8,7 @@ import Picker from "emoji-picker-react";
 
 const ChatBox: React.FC<{
   channelId: string;
-  sessionKey: SymmetricKey;
+  sessionKey?: SymmetricKey;
 }> = ({ channelId, sessionKey }) => {
   const { keychain } = Auth.useContainer();
   const sendMessage = trpc.useMutation("channels.send");
@@ -42,19 +42,24 @@ const ChatBox: React.FC<{
             setText("");
             await sendMessage.mutateAsync({
               id: channelId,
-              payload: await sessionKey.encrypt(
+              payload: await sessionKey!.encrypt(
                 await keychain!.signing.sign(text)
               ),
             });
           }
         }}
+        disabled={!sessionKey}
       />
-      <button className="p-3 bg-chat-input-elements dark:bg-chat-input-elements-dark rounded-xl">
+      <button
+        className="p-3 bg-chat-input-elements dark:bg-chat-input-elements-dark rounded-xl"
+        disabled={!sessionKey}
+      >
         <FontAwesomeIcon icon={faFileUpload} fixedWidth />
       </button>
       <button
         className="p-3 bg-chat-input-elements dark:bg-chat-input-elements-dark rounded-xl"
         onClick={() => setEmojiPicker(!emojiPicker)}
+        disabled={!sessionKey}
       >
         <FontAwesomeIcon icon={faSmile} fixedWidth />
       </button>
