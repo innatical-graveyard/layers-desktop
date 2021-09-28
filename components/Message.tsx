@@ -73,7 +73,7 @@ const Message: React.FC<{
       >
         {primary && (
           <>
-            <p className="font-bold flex items-center">
+            <div className="font-bold flex items-center">
               {user.data?.ok ? (
                 user.data.user.username
               ) : (
@@ -85,7 +85,7 @@ const Message: React.FC<{
               <span className="text-secondary font-normal text-xs ml-2">
                 {dayjs(createdAt).calendar()}
               </span>
-            </p>
+            </div>
           </>
         )}
         {message.data !== undefined ? (
