@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 
 export const NavigationStack: React.FC<{
-  mainContent: React.FC<{ backButton: () => JSX.Element | undefined }>;
+  mainContent: React.FC<{ backButton: () => JSX.Element }>;
   sidebar: React.FC<{}>;
   backUrl: string;
 }> = ({ mainContent: Content, sidebar: Sidebar, backUrl }) => {

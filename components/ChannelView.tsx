@@ -12,7 +12,7 @@ const ChatBox = dynamic(() => import("./ChatBox"), {
 
 const ChannelView: React.FC<{
   id: string;
-  backButton?: () => JSX.Element | undefined;
+  backButton: () => JSX.Element;
 }> = ({ id, backButton: BackButton }) => {
   const { keychain, token } = Auth.useContainer();
 
@@ -81,7 +81,7 @@ const ChannelView: React.FC<{
   return (
     <div className="flex flex-col w-full">
       <div className="pt-8 px-8 flex gap-3 items-center">
-        {BackButton && <BackButton />}
+        {BackButton ? <BackButton /> : ""}
 
         <img
           src={user.data?.ok ? user.data.user.avatar : ""}
