@@ -82,7 +82,7 @@ const User = () => {
               await utils.invalidateQuery(["users.me"]);
             }}
           >
-            {({ isSubmitting, setValues, values }) => (
+            {({ isSubmitting, setFieldValue, values }) => (
               <Form className="flex flex-col gap-3">
                 <label htmlFor="">Avatar</label>
                 <div className="p-5 dark:bg-input-elements-dark rounded-lg flex items-center">
@@ -129,16 +129,17 @@ const User = () => {
                           method: "POST",
                           body: formData,
                           headers: {
-                            Authorization: token,
+                            Authorization: token!,
                           },
                         }
                       );
                       const json = await res.json();
-                      setValues({
-                        avatar:
-                          "https://layers.fra1.cdn.digitaloceanspaces.com/" +
-                          json.id,
-                      });
+
+                      setFieldValue(
+                        "avatar",
+                        "https://layers.fra1.cdn.digitaloceanspaces.com/" +
+                          json.id
+                      );
                     }}
                   />
                 </div>
