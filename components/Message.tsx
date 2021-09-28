@@ -6,7 +6,8 @@ import {
 } from "@innatical/inncryption";
 import dayjs from "dayjs";
 import calendar from "dayjs/plugin/calendar";
-import { useAsync } from "react-use";
+import { useMemo } from "react";
+import { useQuery } from "react-query";
 import { trpc } from "../util/trpc";
 
 dayjs.extend(calendar);
@@ -16,7 +17,8 @@ const Message: React.FC<{
   sessionKey: SymmetricKey;
   author: string;
   createdAt: string;
-}> = ({ author, payload, sessionKey, createdAt }) => {
+  primary: boolean;
+}> = ({ author, payload, sessionKey, createdAt, primary }) => {
   const user = trpc.useQuery([
     "users.user",
     {
@@ -24,47 +26,80 @@ const Message: React.FC<{
     },
   ]);
 
-  const message = useAsync(async () => {
-    if (user.data?.ok) {
-      const message = (await sessionKey.decrypt(payload)) as SignedMessage;
-      const unwrapped = await SigningPair.verify(
-        message,
-        user.data.user.publicKeychain.signing
-      );
+  const message = useQuery(
+    ["messageContent", payload, sessionKey, user.data],
+    async () => {
+      if (user.data?.ok) {
+        const message = (await sessionKey.decrypt(payload)) as SignedMessage;
+        const unwrapped = await SigningPair.verify(
+          message,
+          user.data.user.publicKeychain.signing
+        );
 
-      if (unwrapped.ok) {
-        return unwrapped.message as string;
-      } else {
-        return false;
+        if (unwrapped.ok) {
+          return unwrapped.message as string;
+        } else {
+          return false;
+        }
       }
     }
-  }, [payload, sessionKey, user.data]);
+  );
+
+  const messagePlaceholderWidth = useMemo(
+    () => Math.random() * (70 - 30) + 30,
+    []
+  );
+  const usernamePlaceholderWidth = useMemo(
+    () => Math.random() * (20 - 10) + 10,
+    []
+  );
 
   return (
-    <div className="flex gap-3 my-2">
-      <img
-        src={user.data?.ok ? user.data.user.avatar : ""}
-        className="rounded-xl object-cover w-12 h-12"
-      />
+    <div className={primary ? "flex gap-4 mt-3 w-full" : "flex gap-4 w-full"}>
+      {primary &&
+        (user.data?.ok ? (
+          <img
+            src={user.data.user.avatar}
+            className="rounded-xl object-cover w-12 h-12"
+          />
+        ) : (
+          <div className="animate-pulse rounded-xl w-12 h-12 bg-placeholder dark:bg-placeholder-dark" />
+        ))}
 
-      <div className="flex flex-col">
-        <p className="font-bold">
-          {user.data?.ok ? user.data.user.username : ""}{" "}
-          <span className="text-secondary font-normal text-xs ml-2">
-            {dayjs(createdAt).calendar()}
-          </span>
-        </p>
-        <p>
-          {message.value !== undefined ? (
-            message.value === false ? (
-              <i>This message could not be decrypted or verfiied</i>
-            ) : (
-              message.value
-            )
+      <div
+        className={
+          primary ? "flex flex-col flex-1" : "ml-16 flex flex-col flex-1"
+        }
+      >
+        {primary && (
+          <>
+            <p className="font-bold flex items-center">
+              {user.data?.ok ? (
+                user.data.user.username
+              ) : (
+                <div
+                  className="animate-pulse rounded h-5 bg-placeholder dark:bg-placeholder-dark"
+                  style={{ width: usernamePlaceholderWidth + "%" }}
+                />
+              )}{" "}
+              <span className="text-secondary font-normal text-xs ml-2">
+                {dayjs(createdAt).calendar()}
+              </span>
+            </p>
+          </>
+        )}
+        {message.data !== undefined ? (
+          message.data === false ? (
+            <i>This message could not be decrypted or verfiied</i>
           ) : (
-            ""
-          )}
-        </p>
+            <p>{message.data}</p>
+          )
+        ) : (
+          <div
+            className="h-5 animate-pulse rounded bg-placeholder dark:bg-placeholder-dark"
+            style={{ width: `${messagePlaceholderWidth}%` }}
+          />
+        )}
       </div>
     </div>
   );

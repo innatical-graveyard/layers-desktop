@@ -1,3 +1,4 @@
+import React, { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { trpc } from "../util/trpc";
@@ -11,6 +12,11 @@ const MessageCard: React.FC<{ userId: string; channelId: string }> = ({
   const user = trpc.useQuery(["users.user", { id: userId }]);
   const router = useRouter();
 
+  const usernamePlaceholderWidth = useMemo(
+    () => Math.random() * (70 - 40) + 40,
+    []
+  );
+
   return (
     <Link href={"/app/messages/" + channelId}>
       <a>
@@ -21,14 +27,25 @@ const MessageCard: React.FC<{ userId: string; channelId: string }> = ({
               : "flex gap-3 w-full items-center p-2 rounded-xl"
           }
         >
-          <img
-            src={user.data?.ok ? user.data.user.avatar : ""}
-            className="rounded-xl object-cover w-12 h-12"
-          />
-          <div className="flex flex-col">
-            <p className="font-bold">
-              {user.data?.ok ? user.data.user.username : ""}
-            </p>
+          {user.data?.ok ? (
+            <img
+              src={user.data.user.avatar}
+              className="rounded-xl object-cover w-12 h-12"
+            />
+          ) : (
+            <div className="animate-pulse rounded-xl w-12 h-12 bg-placeholder dark:bg-placeholder-dark" />
+          )}
+          <div className="flex flex-col flex-1">
+            {user.data?.ok ? (
+              <p className="font-bold">
+                {user.data?.ok ? user.data.user.username : ""}
+              </p>
+            ) : (
+              <div
+                className="animate-pulse rounded h-5 bg-placeholder dark:bg-placeholder-dark"
+                style={{ width: usernamePlaceholderWidth + "%" }}
+              />
+            )}
             <p className="font-light text-xs">Let's get to work!</p>
           </div>
           <FontAwesomeIcon icon={faChevronRight} className="ml-auto mr-3" />
