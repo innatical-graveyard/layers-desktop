@@ -165,7 +165,7 @@ const useVoice = () => {
             const stream = await navigator.mediaDevices.getUserMedia({
               audio: true,
             });
-            setUserStreams((strems) => [...streams, stream]);
+            setUserStreams((streams) => [...streams, stream]);
             setPeer(new Peer({ initiator: true, stream }));
             break;
         }
@@ -200,7 +200,7 @@ const useVoice = () => {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
       });
-      setUserStreams((strems) => [...streams, stream]);
+      setUserStreams((streams) => [...streams, stream]);
       setPeer(new Peer({ stream }));
       await answer.mutateAsync({ id: channelID });
     },
