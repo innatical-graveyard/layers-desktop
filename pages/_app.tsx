@@ -5,21 +5,27 @@ import "../styles/globals.scss";
 import type { App } from "../../layers-backend/resources/_app";
 import { withTRPC } from "@trpc/next";
 import Auth from "../util/auth";
+import Voice from "../util/voice";
 import { links } from "../util/trpc";
 import { ReactQueryDevtools } from "react-query/devtools";
+import React from "react";
+import RingingModal from "../components/RingingModal";
 
 const Layers = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
   return (
     <Auth.Provider>
-      <ReactQueryDevtools />
-      <div
-        className={router.pathname.startsWith("/app") ? "flex h-screen" : ""}
-      >
-        {router.pathname.startsWith("/app") ? <Sidebar /> : <></>}
-        <Component {...pageProps} />
-      </div>
+      <Voice.Provider>
+        <ReactQueryDevtools />
+        <div
+          className={router.pathname.startsWith("/app") ? "flex h-screen" : ""}
+        >
+          {router.pathname.startsWith("/app") ? <Sidebar /> : <></>}
+          <Component {...pageProps} />
+        </div>
+        <RingingModal />
+      </Voice.Provider>
     </Auth.Provider>
   );
 };

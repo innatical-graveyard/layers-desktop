@@ -5,6 +5,9 @@ import { useAsync } from "react-use";
 import Auth from "../util/auth";
 import dynamic from "next/dynamic";
 import { Waypoint } from "react-waypoint";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPhone, faPhoneSlash } from "@fortawesome/free-solid-svg-icons";
+import Voice from "../util/voice";
 
 const ChatBox = dynamic(() => import("./ChatBox"), {
   ssr: false,
@@ -91,6 +94,8 @@ const ChannelView: React.FC<{
     []
   );
 
+  const { startDMCall, channelID, hangUp } = Voice.useContainer();
+
   return (
     <div className="flex flex-col w-full">
       <div className="pt-8 pb-2 px-8 flex gap-3 items-center">
@@ -116,6 +121,24 @@ const ChannelView: React.FC<{
           )}
           {/* lleyton<span className="text-secondary">@innatical.com</span> */}
           {/* <h2>Working on a new app</h2> */}
+        </div>
+        <div>
+          <button
+            className={
+              channelID === id
+                ? "w-12 h-12 rounded-xl bg-danger"
+                : "w-12 h-12 rounded-xl bg-inndigo"
+            }
+            onClick={() =>
+              channelID === id ? hangUp() : startDMCall({ channelID: id })
+            }
+          >
+            {channelID === id ? (
+              <FontAwesomeIcon icon={faPhoneSlash} />
+            ) : (
+              <FontAwesomeIcon icon={faPhone} />
+            )}
+          </button>
         </div>
       </div>
       <div className="flex-1 p-8 flex py-0 overflow-y-auto flex-col-reverse mt-auto">
