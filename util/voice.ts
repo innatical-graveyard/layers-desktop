@@ -17,6 +17,46 @@ const useVoice = () => {
   const answer = trpc.useMutation("channels.answer");
   const utils = trpc.useContext();
   const { token, keychain } = Auth.useContainer();
+  const [time, setTime] = useState<number>(0);
+  const [userStreams, setUserStreams] = useState<MediaStream[]>([]);
+  const [remoteStreams, setRemoteStreams] = useState<MediaStream[]>([]);
+  const [muted, setMuted] = useState(false);
+  const [deafened, setDeafened] = useState(false);
+
+  useEffect(() => {
+    if (!userStreams) return;
+    userStreams
+      .flat()
+      .flatMap((stream) => stream.getTracks())
+      .forEach((track) => (track.enabled = !muted));
+  }, [muted, userStreams]);
+
+  useEffect(() => {
+    if (!deafened) return;
+    remoteStreams
+      .flat()
+      .flatMap((stream) => stream.getTracks())
+      .forEach((track) => (track.enabled = !deafened));
+  }, [deafened, remoteStreams]);
+
+  useEffect(() => {
+    if (!channelID) return;
+    const interval = setInterval(() => {
+      setTime((time) => time + 1);
+    }, 1000);
+
+    return () => {
+      setTime(0);
+      clearInterval(interval);
+    };
+  }, [channelID]);
+
+  useEffect(() => {
+    if (!peer) return;
+    return () => {
+      peer.destroy();
+    };
+  }, [peer]);
 
   useEffect(() => {
     currentPeer.current = peer;
@@ -54,7 +94,7 @@ const useVoice = () => {
   useEffect(() => {
     if (!peer) return;
     const onStream = (stream: MediaStream) => {
-      console.log("uwu");
+      setRemoteStreams((streams) => [...streams, stream]);
       const audio = new Audio();
       audio.srcObject = stream;
       audio.play();
@@ -70,7 +110,6 @@ const useVoice = () => {
   useEffect(() => {
     if (!peer) return;
     const onConnect = () => {
-      console.log("connected");
       setState("connected");
     };
 
@@ -126,6 +165,7 @@ const useVoice = () => {
             const stream = await navigator.mediaDevices.getUserMedia({
               audio: true,
             });
+            setUserStreams((strems) => [...streams, stream]);
             setPeer(new Peer({ initiator: true, stream }));
             break;
         }
@@ -160,6 +200,7 @@ const useVoice = () => {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
       });
+      setUserStreams((strems) => [...streams, stream]);
       setPeer(new Peer({ stream }));
       await answer.mutateAsync({ id: channelID });
     },
@@ -182,6 +223,12 @@ const useVoice = () => {
     ringing,
     decline,
     acceptDMCall,
+    state,
+    time,
+    muted,
+    deafened,
+    setMuted,
+    setDeafened,
   };
 };
 
