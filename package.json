@@ -30,6 +30,7 @@
     "react-use": "^17.3.1",
     "react-waypoint": "^10.1.0",
     "sass": "^1.42.1",
+    "simple-peer": "^9.11.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {
@@ -37,6 +38,7 @@
     "@types/node": "^16.9.6",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.1",
+    "@types/simple-peer": "^9.11.3",
     "autoprefixer": "^10.3.5",
     "postcss": "^8.3.7",
     "tailwindcss": "^2.2.15",
