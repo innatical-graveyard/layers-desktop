@@ -4,11 +4,22 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { trpc } from "../util/trpc";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import {
+  EncryptedMessage,
+  SignedMessage,
+  SigningPair,
+} from "@innatical/inncryption";
+import { useAsync } from "react-use";
+import Auth from "../util/auth";
+import { useQuery } from "react-query";
 
-const MessageCard: React.FC<{ userId: string; channelId: string }> = ({
-  userId,
-  channelId,
-}) => {
+const MessageCard: React.FC<{
+  userId: string;
+  channelId: string;
+  lastMessage?: { author: string; payload: EncryptedMessage };
+}> = ({ userId, channelId, lastMessage }) => {
+  const { keychain, token } = Auth.useContainer();
+  const me = trpc.useQuery(["users.me"]);
   const user = trpc.useQuery(["users.user", { id: userId }]);
   const router = useRouter();
 
@@ -16,6 +27,64 @@ const MessageCard: React.FC<{ userId: string; channelId: string }> = ({
     () => Math.random() * (70 - 40) + 40,
     []
   );
+
+  const sessionKey = useAsync(
+    async () =>
+      user.data?.ok
+        ? await keychain?.encryption.sessionKey(
+            user.data.user.publicKeychain.encryption
+          )
+        : undefined,
+    [user.data]
+  );
+
+  const message = useQuery(
+    ["messageContent", lastMessage?.payload, sessionKey, user.data, me.data],
+    async () => {
+      if (user.data?.ok && me.data?.ok) {
+        const message = (await sessionKey.value!.decrypt(
+          lastMessage!.payload
+        )) as SignedMessage;
+        const unwrapped = await SigningPair.verify(
+          message,
+          lastMessage!.author === me.data.user.id
+            ? me.data.user.publicKeychain.signing
+            : user.data.user.publicKeychain.signing
+        );
+
+        if (unwrapped.ok) {
+          return unwrapped.message as string;
+        } else {
+          return false;
+        }
+      }
+    },
+    {
+      enabled: !!lastMessage?.payload && !!sessionKey.value && !!user.data?.ok,
+    }
+  );
+
+  const utils = trpc.useContext();
+
+  trpc.useSubscription(["channels.channel", { id: channelId, token: token! }], {
+    onNext(e) {
+      switch (e.type) {
+        case "message": {
+          const data = utils.getQueryData(["users.getDMChannels"]);
+          if (data?.ok)
+            utils.setQueryData(["users.getDMChannels"], {
+              ok: true,
+              channels: data.channels.map((channel) =>
+                channel.id === channelId
+                  ? { ...channel, lastMessage: e }
+                  : channel
+              ),
+            });
+          break;
+        }
+      }
+    },
+  });
 
   return (
     <Link href={"/app/messages/" + channelId}>
@@ -46,7 +115,13 @@ const MessageCard: React.FC<{ userId: string; channelId: string }> = ({
                 style={{ width: usernamePlaceholderWidth + "%" }}
               />
             )}
-            <p className="font-light text-xs">Let's get to work!</p>
+            <p className="font-light text-xs leading-none truncate w-32">
+              {message.data &&
+              me.data?.ok &&
+              lastMessage?.author === me.data.user.id
+                ? "You: " + message.data
+                : message.data}
+            </p>
           </div>
           <FontAwesomeIcon icon={faChevronRight} className="ml-auto mr-3" />
         </div>
