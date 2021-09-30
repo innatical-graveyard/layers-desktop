@@ -88,7 +88,7 @@ const MessageCard: React.FC<{
 
   return (
     <Link href={"/app/messages/" + channelId}>
-      <a>
+      <a className="hover:bg-sidebar dark:hover:bg-sidebar-dark rounded-xl">
         <div
           className={
             router.asPath === "/app/messages/" + channelId
