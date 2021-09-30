@@ -39,6 +39,8 @@ const useCurrentUser = () => {
           if (!signed.ok) return;
 
           try {
+            if (!("Notification" in window)) return;
+
             const notification = new Notification(user.user.username, {
               body: signed.message as string,
             });
@@ -56,7 +58,11 @@ const useCurrentUser = () => {
 
   useEffect(() => {
     if (!token) return;
-    Notification.requestPermission();
+    if (!("Notification" in window)) return;
+    
+    try {
+      Notification.requestPermission();
+    }
   }, [token]);
 };
 
