@@ -10,6 +10,7 @@ import { links } from "../util/trpc";
 import { ReactQueryDevtools } from "react-query/devtools";
 import React from "react";
 import RingingModal from "../components/RingingModal";
+import CurrentUser from "../util/currentUser";
 
 const Layers = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -17,13 +18,17 @@ const Layers = ({ Component, pageProps }: AppProps) => {
   return (
     <Auth.Provider>
       <Voice.Provider>
-        <ReactQueryDevtools />
-        <div
-          className={router.pathname.startsWith("/app") ? "flex h-screen" : ""}
-        >
-          {router.pathname.startsWith("/app") ? <Sidebar /> : <></>}
-          <Component {...pageProps} />
-        </div>
+        <CurrentUser.Provider>
+          <ReactQueryDevtools />
+          <div
+            className={
+              router.pathname.startsWith("/app") ? "flex h-screen" : ""
+            }
+          >
+            {router.pathname.startsWith("/app") ? <Sidebar /> : <></>}
+            <Component {...pageProps} />
+          </div>
+        </CurrentUser.Provider>
         <RingingModal />
       </Voice.Provider>
     </Auth.Provider>
