@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { usePublicOnlyPage } from "../../util/auth";
 import { client, trpc } from "../../util/trpc";
 import Auth from "../../util/auth";
+import { Button } from "../../components/UI/Button";
 
 const Login = () => {
   usePublicOnlyPage();
@@ -120,13 +121,14 @@ const Login = () => {
               className="text-red-500"
             />
 
-            <button
+            <Button
               type="submit"
-              disabled={isSubmitting}
-              className="p-3 font-bold bg-inndigo rounded-lg mt-8 mb-3 text-offwhite"
+              className="rounded-lg"
+              height="tall"
+              color="bg-inndigo"
             >
               Login
-            </button>
+            </Button>
             <Link href="/authentication/register">Not Registered?</Link>
           </Form>
         )}

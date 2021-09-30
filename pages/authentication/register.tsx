@@ -4,6 +4,8 @@ import * as yup from "yup";
 import { Keychain, SymmetricKey } from "@innatical/inncryption";
 import { trpc } from "../../util/trpc";
 import Auth, { usePublicOnlyPage } from "../../util/auth";
+import React from "react";
+import { Button } from "../../components/UI/Button";
 
 const Register = () => {
   usePublicOnlyPage();
@@ -103,13 +105,15 @@ const Register = () => {
               className="text-red-500"
             />
 
-            <button
+            <Button
               type="submit"
+              className="rounded-lg"
+              height="tall"
+              color="bg-inndigo"
               disabled={isSubmitting}
-              className="p-3 font-bold bg-inndigo rounded-lg mt-8 mb-3 text-offwhite"
             >
               Register
-            </button>
+            </Button>
             <Link href="/authentication/login">Registered?</Link>
           </Form>
         )}
