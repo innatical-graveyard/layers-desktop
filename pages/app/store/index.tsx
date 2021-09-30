@@ -1,8 +1,4 @@
-import React, { useEffect, useState } from "react";
-import ServersSidebar from "../../../components/ServersSidebar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faHashtag } from "@fortawesome/free-solid-svg-icons";
-import ChannelView from "../../../components/ChannelView";
+import React, { useState } from "react";
 import { useAuthedPage } from "../../../util/auth";
 import ShopSidebar from "../../../components/ShopSidebar";
 

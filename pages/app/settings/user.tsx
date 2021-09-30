@@ -5,8 +5,8 @@ import * as yup from "yup";
 import { useAuthedPage } from "../../../util/auth";
 import { useEffect, useRef, useState } from "react";
 import { faFileUpload } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Auth from "../../../util/auth";
+import { IconButton } from "../../../components/UI/IconButton";
 
 const User = () => {
   useAuthedPage();
@@ -98,14 +98,15 @@ const User = () => {
                       Max image size is 16mb
                     </h6>
                   </div>
-                  <button
-                    className="ml-auto w-12 h-12 rounded-xl bg-inndigo"
-                    type="button"
+
+                  <IconButton
+                    icon={faFileUpload}
+                    color="bg-inndigo"
+                    className="ml-auto w-12 h-12"
                     onClick={() => input.current?.click()}
                     disabled={isUploading}
-                  >
-                    <FontAwesomeIcon icon={faFileUpload} />
-                  </button>
+                  />
+
                   <input
                     className="hidden"
                     ref={input}

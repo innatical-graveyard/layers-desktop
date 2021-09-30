@@ -5,10 +5,10 @@ import {
   faVolumeMute,
   faVolumeUp,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { FC } from "react";
 import { trpc } from "../util/trpc";
 import Voice from "../util/voice";
+import { IconButton } from "./UI/IconButton";
 
 const CallUI: FC<{ relative?: boolean }> = ({ relative }) => {
   const {
@@ -45,21 +45,24 @@ const CallUI: FC<{ relative?: boolean }> = ({ relative }) => {
         {Math.floor(time / 60) + ":" + String(time % 60).padStart(2, "0")}
       </p>
       <div className="pt-1 flex gap-1">
-        <button
-          className="bg-inndigo w-10 rounded-lg"
+        <IconButton
+          icon={muted ? faMicrophoneSlash : faMicrophone}
           onClick={() => setMuted(!muted)}
-        >
-          <FontAwesomeIcon icon={muted ? faMicrophoneSlash : faMicrophone} />
-        </button>
-        <button
-          className="bg-inndigo w-10 rounded-lg"
+          color={"bg-inndigo"}
+        />
+
+        <IconButton
+          icon={deafened ? faVolumeMute : faVolumeUp}
           onClick={() => setDeafened(!deafened)}
-        >
-          <FontAwesomeIcon icon={deafened ? faVolumeMute : faVolumeUp} />
-        </button>
-        <button className="bg-danger rounded-lg p-2 flex-1" onClick={hangUp}>
-          <FontAwesomeIcon icon={faPhoneSlash} />
-        </button>
+          color={"bg-inndigo"}
+        />
+
+        <IconButton
+          icon={faPhoneSlash}
+          onClick={hangUp}
+          color={"bg-danger"}
+          className="flex-1"
+        />
       </div>
     </div>
   ) : (
