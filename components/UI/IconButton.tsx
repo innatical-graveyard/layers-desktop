@@ -33,7 +33,7 @@ export const IconButton: FC<{
     className?.includes("h-") ? "" : "h-full"
   } w-9 h-9 sm:w-12 sm:h-12`;
 
-  if (!enforceAspectRatio) {
+  if (typeof enforceAspectRatio === "undefined" || enforceAspectRatio) {
     classes += " ratio-1-1";
   }
 

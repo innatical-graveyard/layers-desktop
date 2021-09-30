@@ -62,6 +62,7 @@ const CallUI: FC<{ relative?: boolean }> = ({ relative }) => {
           onClick={hangUp}
           color={"bg-danger"}
           className="flex-1"
+          enforceAspectRatio={false}
         />
       </div>
     </div>
