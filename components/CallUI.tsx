@@ -6,11 +6,11 @@ import {
   faVolumeUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { FC } from "react";
 import { trpc } from "../util/trpc";
 import Voice from "../util/voice";
 
-const CallUI = () => {
+const CallUI: FC<{ relative?: boolean }> = ({ relative }) => {
   const {
     channelID,
     state,
@@ -32,7 +32,11 @@ const CallUI = () => {
   );
 
   return channelID ? (
-    <div className="bg-card dark:bg-card-dark rounded-lg p-3 absolute bottom-2 left-2 right-2">
+    <div
+      className={`bg-card dark:bg-card-dark rounded-lg p-3 ${
+        !relative ? "absolute bottom-2 left-2 right-2" : "w-full mt-4"
+      }`}
+    >
       <h1 className="font-bold">
         Call w/{user.data?.ok ? user.data.user.username : ""}
       </h1>

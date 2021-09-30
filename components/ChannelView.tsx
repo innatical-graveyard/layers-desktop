@@ -8,6 +8,7 @@ import { Waypoint } from "react-waypoint";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone, faPhoneSlash } from "@fortawesome/free-solid-svg-icons";
 import Voice from "../util/voice";
+import CallUI from "./CallUI";
 
 const ChatBox = dynamic(() => import("./ChatBox"), {
   ssr: false,
@@ -143,6 +144,11 @@ const ChannelView: React.FC<{
       </div>
       <div className="flex-1 p-8 flex py-0 overflow-y-auto flex-col-reverse mt-auto">
         <div className="p-3" />
+
+        <div className="sm:hidden flex gap-4 w-full">
+          <CallUI relative={true} />
+        </div>
+
         {sessionKey.value &&
           messagesList?.map((message, index) => (
             <Message
