@@ -17,11 +17,13 @@ const RingingModal = () => {
       "users.user",
       {
         id:
-          channel.data?.ok && channel.data.type === "DM" ? channel.data.to : "",
+          !!channel.data?.ok && channel.data.type === "DM"
+            ? channel.data.to
+            : "",
       },
     ],
     {
-      enabled: channel.data?.ok && channel.data.type === "DM",
+      enabled: !!channel.data?.ok && channel.data.type === "DM",
     }
   );
 

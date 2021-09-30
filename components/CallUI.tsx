@@ -30,6 +30,7 @@ const CallUI = () => {
       enabled: !!channel.data?.ok,
     }
   );
+
   return channelID ? (
     <div className="bg-card dark:bg-card-dark rounded-lg p-3 absolute bottom-2 left-2 right-2">
       <h1 className="font-bold">
