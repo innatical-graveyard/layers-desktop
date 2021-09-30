@@ -24,6 +24,12 @@ const useVoice = () => {
   const [deafened, setDeafened] = useState(false);
 
   useEffect(() => {
+    if (!peer) return;
+
+    userStreams.forEach((stream) => peer.addStream(stream));
+  }, [userStreams, peer]);
+
+  useEffect(() => {
     if (!userStreams) return;
     userStreams
       .flat()
@@ -162,11 +168,7 @@ const useVoice = () => {
             break;
           case "answer":
             setState("signaling");
-            const stream = await navigator.mediaDevices.getUserMedia({
-              audio: true,
-            });
-            setUserStreams((streams) => [...streams, stream]);
-            setPeer(new Peer({ initiator: true, stream }));
+            setPeer(new Peer({ initiator: true }));
             break;
         }
       },
@@ -185,6 +187,10 @@ const useVoice = () => {
 
   const startDMCall = useCallback(
     async ({ channelID }: { channelID: string }) => {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+      });
+      setUserStreams((streams) => [...streams, stream]);
       setChannelID(channelID);
       setState("ringing");
       await ring.mutateAsync({ id: channelID });
@@ -194,14 +200,14 @@ const useVoice = () => {
 
   const acceptDMCall = useCallback(
     async ({ channelID }: { channelID: string }) => {
-      setChannelID(channelID);
-      setState("signaling");
-      setRinging(undefined);
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
       });
+      setChannelID(channelID);
+      setState("signaling");
+      setRinging(undefined);
       setUserStreams((streams) => [...streams, stream]);
-      setPeer(new Peer({ stream }));
+      setPeer(new Peer());
       await answer.mutateAsync({ id: channelID });
     },
     []
