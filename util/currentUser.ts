@@ -59,10 +59,8 @@ const useCurrentUser = () => {
   useEffect(() => {
     if (!token) return;
     if (!("Notification" in window)) return;
-    
-    try {
-      Notification.requestPermission();
-    }
+
+    Notification.requestPermission().catch(() => {});
   }, [token]);
 };
 
