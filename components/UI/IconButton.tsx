@@ -17,12 +17,25 @@ export const IconButton: FC<{
     | "bg-red-500";
   disabled?: boolean;
   onClick?: React.MouseEventHandler;
-}> = ({ href, icon, className, color, disabled, onClick }) => {
-  const classes = `${
+  enforceAspectRatio?: boolean;
+}> = ({
+  href,
+  icon,
+  className,
+  color,
+  disabled,
+  onClick,
+  enforceAspectRatio,
+}) => {
+  let classes = `${
     className || ""
   } p-3 ${color} rounded-xl flex justify-center items-center ${
     className?.includes("h-") ? "" : "h-full"
-  }`;
+  } w-9 h-9 sm:w-12 sm:h-12`;
+
+  if (!enforceAspectRatio) {
+    classes += " ratio-1-1";
+  }
 
   if (href) {
     return (
