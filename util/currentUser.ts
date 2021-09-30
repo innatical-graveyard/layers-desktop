@@ -60,7 +60,7 @@ const useCurrentUser = () => {
     if (!token) return;
     if (!("Notification" in window)) return;
 
-    Notification.requestPermission().catch(() => {});
+    Notification.requestPermission();
   }, [token]);
 };
 
