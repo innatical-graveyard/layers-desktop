@@ -30,7 +30,6 @@ const useVoice = () => {
   }, [userStreams, peer]);
 
   useEffect(() => {
-    if (!userStreams) return;
     userStreams
       .flat()
       .flatMap((stream) => stream.getTracks())
@@ -38,7 +37,6 @@ const useVoice = () => {
   }, [muted, userStreams]);
 
   useEffect(() => {
-    if (!deafened) return;
     remoteStreams
       .flat()
       .flatMap((stream) => stream.getTracks())
@@ -71,6 +69,7 @@ const useVoice = () => {
   useEffect(() => {
     if (!peer) return;
     const onSignal = async (data: Peer.SignalData) => {
+      console.log("sending", data);
       const signed = await keychain!.signing.sign(data);
 
       const channel = await utils.fetchQuery([
@@ -159,7 +158,7 @@ const useVoice = () => {
                 message,
                 user.user.publicKeychain.signing
               );
-              console.log(unwrapped);
+              console.log("received", unwrapped);
               if (unwrapped.ok)
                 currentPeer.current?.signal(
                   unwrapped.message as Peer.SignalData
@@ -167,8 +166,10 @@ const useVoice = () => {
             }
             break;
           case "answer":
-            setState("signaling");
-            setPeer(new Peer({ initiator: true }));
+            if (me.data?.ok && data.from !== me.data.user.id) {
+              setState("signaling");
+              setPeer(new Peer({ initiator: true }));
+            }
             break;
         }
       },
