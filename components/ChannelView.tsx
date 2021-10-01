@@ -56,11 +56,11 @@ const ChannelView: React.FC<{
           utils.queryClient.setQueryData(
             ["channels.messages", { id }, "TRPC_INFINITE_QUERY"],
             {
-              ...query,
+              ...(query ?? {}),
               pages: [
                 {
-                  ...query.pages[0],
-                  messages: [...query.pages[0].messages, e],
+                  ...(query.pages[0] ?? []),
+                  messages: [...query.pages[0].messages, e] ?? [],
                   ok: true,
                 },
               ],
