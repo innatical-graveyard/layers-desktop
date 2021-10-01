@@ -17,7 +17,7 @@ const SettingsSidebar = () => {
   const router = useRouter();
 
   return (
-    <div className="w-72 bg-primary-sidebar dark:bg-primary-sidebar-dark p-5 h-full flex flex-col">
+    <div className="w-full sm:w-72 bg-primary-sidebar dark:bg-primary-sidebar-dark p-5 h-full flex flex-col">
       <h1 className="text-2xl font-bold mb-2 ml-2">Settings</h1>
       <div className="flex flex-col bg-primary-sidebar dark:bg-primary-sidebar-dark flex-1">
         <Link href="/app/settings/user">
