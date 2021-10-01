@@ -35,8 +35,8 @@ const Home = () => {
           <h1 className="text-5xl font-bold">Isometric</h1>
           <h2 className="text-3xl text-inndigo mb-2">{tagline}</h2>
           <Link href="/authentication/register">
-            <a className="text-xl flex">
-              Join us <FontAwesomeIcon icon={faArrowRight} />
+            <a className="text-xl flex items-center">
+              Join us <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
             </a>
           </Link>
           <svg
