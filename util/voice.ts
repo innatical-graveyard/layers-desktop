@@ -217,6 +217,7 @@ const useVoice = () => {
   const hangUp = useCallback(async () => {
     setChannelID(undefined);
     setState(undefined);
+    setPeer(undefined);
   }, []);
 
   const decline = useCallback(async () => {
