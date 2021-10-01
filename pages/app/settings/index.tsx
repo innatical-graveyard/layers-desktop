@@ -1,6 +1,5 @@
 import SettingsSidebar from "../../../components/SettingsSidebar";
-import { serverAuthedPage, useAuthedPage } from "../../../util/auth";
-export const getServerSideProps = serverAuthedPage;
+import { useAuthedPage } from "../../../util/auth";
 
 const Settings = () => {
   useAuthedPage();

@@ -2,12 +2,11 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import SettingsSidebar from "../../../components/SettingsSidebar";
 import { trpc } from "../../../util/trpc";
 import * as yup from "yup";
-import { serverAuthedPage, useAuthedPage } from "../../../util/auth";
+import { useAuthedPage } from "../../../util/auth";
 import { useEffect, useRef, useState } from "react";
 import { faFileUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Auth from "../../../util/auth";
-export const getServerSideProps = serverAuthedPage;
 
 const User = () => {
   useAuthedPage();
