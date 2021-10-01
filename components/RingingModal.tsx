@@ -78,17 +78,19 @@ const RingingModal = () => {
 
                 <h1>{user.data?.ok ? user.data.user.username : ""}</h1>
 
-                <div className="mt-4 flex w-full gap-3">
+                <div className="mt-4 flex w-full gap-3 h-10">
                   <IconButton
                     icon={faPhoneSlash}
                     onClick={decline}
                     color={"bg-danger"}
+                    className="flex-1"
                   />
 
                   <IconButton
                     icon={faPhone}
                     onClick={() => acceptDMCall({ channelID: ringing! })}
                     color={"bg-inndigo"}
+                    className="flex-1"
                   />
                 </div>
               </div>
