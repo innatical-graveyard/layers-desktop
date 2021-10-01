@@ -3,12 +3,14 @@ import Link from "next/link";
 import * as yup from "yup";
 import { Keychain, SymmetricKey } from "@innatical/inncryption";
 import { trpc } from "../../util/trpc";
-import Auth, { usePublicOnlyPage } from "../../util/auth";
+import Auth, { serverPublicOnlyPage, usePublicOnlyPage } from "../../util/auth";
+
+export const getServerSideProps = serverPublicOnlyPage;
 
 const Register = () => {
   usePublicOnlyPage();
 
-  const { setToken, setKeychain } = Auth.useContainer();
+  const { updateToken, setKeychain } = Auth.useContainer();
   const register = trpc.useMutation("users.register");
 
   return (
@@ -56,7 +58,7 @@ const Register = () => {
                 return;
             }
           }
-          setToken(res.token);
+          updateToken(res.token);
           setKeychain(keychain);
         }}
       >

@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import Auth from "../util/auth";
 
 const SettingsSidebar = () => {
-  const { setToken, setKeychain } = Auth.useContainer();
+  const { deleteToken, setKeychain } = Auth.useContainer();
   const router = useRouter();
 
   return (
@@ -70,7 +70,7 @@ const SettingsSidebar = () => {
         <button
           className="flex gap-3 w-full items-center p-2 mt-auto"
           onClick={() => {
-            setToken(null);
+            deleteToken();
             setKeychain(null);
           }}
         >

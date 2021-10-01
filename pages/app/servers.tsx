@@ -3,7 +3,9 @@ import ServersSidebar from "../../components/ServersSidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faHashtag } from "@fortawesome/free-solid-svg-icons";
 import ChannelView from "../../components/ChannelView";
-import { useAuthedPage } from "../../util/auth";
+import { serverAuthedPage, useAuthedPage } from "../../util/auth";
+
+export const getServerSideProps = serverAuthedPage;
 
 const Servers = () => {
   useAuthedPage();
@@ -81,7 +83,7 @@ const Servers = () => {
     return (
       <div className="flex  flex-row items-center justify-center w-full">
         <div className="m-auto text-center">
-          <h1 className="text-4xl">
+          <h1 className="text-4xl font-bold">
             This feature is <span className="text-inndigo">Coming Soon </span>!
           </h1>
           <br />

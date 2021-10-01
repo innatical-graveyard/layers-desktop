@@ -1,11 +1,15 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { GetServerSideProps } from "next";
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    redirect: { destination: "/authentication/login", permanent: false },
+  };
+};
 
 const Redirect = () => {
   const router = useRouter();
-  useEffect(() => {
-    router.replace("/authentication/login");
-  }, []);
+  if (typeof window !== "undefined") router.replace("/authentication/login");
   return <></>;
 };
 
