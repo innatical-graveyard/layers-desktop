@@ -5,10 +5,10 @@ import { useAsync } from "react-use";
 import Auth from "../util/auth";
 import dynamic from "next/dynamic";
 import { Waypoint } from "react-waypoint";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone, faPhoneSlash } from "@fortawesome/free-solid-svg-icons";
 import Voice from "../util/voice";
 import CallUI from "./CallUI";
+import { IconButton } from "./UI/IconButton";
 
 const ChatBox = dynamic(() => import("./ChatBox"), {
   ssr: false,
@@ -105,15 +105,17 @@ const ChannelView: React.FC<{
         {user.data?.ok ? (
           <img
             src={user.data.user.avatar}
-            className="rounded-xl object-cover w-12 h-12"
+            className="rounded-xl object-cover w-9 h-9 sm:w-12 sm:h-12"
           />
         ) : (
-          <div className="animate-pulse rounded-xl w-12 h-12 bg-placeholder dark:bg-placeholder-dark" />
+          <div className="animate-pulse rounded-xl w-9 h-9 sm:w-12 sm:h-12 bg-placeholder dark:bg-placeholder-dark" />
         )}
 
         <div className="w-full">
           {user.data?.ok ? (
-            <h1 className="text-xl font-bold">{user.data.user.username}</h1>
+            <h1 className="text-base sm:text-xl font-bold">
+              {user.data.user.username}
+            </h1>
           ) : (
             <div
               className="animate-pulse rounded h-5 bg-placeholder dark:bg-placeholder-dark"
@@ -123,24 +125,13 @@ const ChannelView: React.FC<{
           {/* lleyton<span className="text-secondary">@innatical.com</span> */}
           {/* <h2>Working on a new app</h2> */}
         </div>
-        <div>
-          <button
-            className={
-              channelID === id
-                ? "w-12 h-12 rounded-xl bg-danger"
-                : "w-12 h-12 rounded-xl bg-inndigo"
-            }
-            onClick={() =>
-              channelID === id ? hangUp() : startDMCall({ channelID: id })
-            }
-          >
-            {channelID === id ? (
-              <FontAwesomeIcon icon={faPhoneSlash} />
-            ) : (
-              <FontAwesomeIcon icon={faPhone} />
-            )}
-          </button>
-        </div>
+        <IconButton
+          onClick={() =>
+            channelID === id ? hangUp() : startDMCall({ channelID: id })
+          }
+          color={channelID === id ? "bg-danger" : "bg-inndigo"}
+          icon={channelID === id ? faPhoneSlash : faPhone}
+        />
       </div>
       <div className="flex-1 p-8 flex py-0 overflow-y-auto flex-col-reverse mt-auto">
         <div className="p-3" />

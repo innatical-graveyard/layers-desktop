@@ -68,10 +68,10 @@ const Message: React.FC<{
         (user.data?.ok ? (
           <img
             src={user.data.user.avatar}
-            className="rounded-xl object-cover w-12 h-12"
+            className="rounded-xl object-cover w-9 h-9 sm:w-12 sm:h-12"
           />
         ) : (
-          <div className="animate-pulse rounded-xl w-12 h-12 bg-placeholder dark:bg-placeholder-dark" />
+          <div className="animate-pulse rounded-xl w-9 h-9 sm:w-12 sm:h-12 bg-placeholder dark:bg-placeholder-dark" />
         ))}
 
       <div

@@ -1,10 +1,10 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileUpload, faSmile } from "@fortawesome/free-solid-svg-icons";
 import { trpc } from "../util/trpc";
 import React, { useState } from "react";
 import Auth from "../util/auth";
 import { SymmetricKey } from "@innatical/inncryption";
 import Picker from "emoji-picker-react";
+import { IconButton } from "./UI/IconButton";
 
 const ChatBox: React.FC<{
   channelId: string;
@@ -33,7 +33,7 @@ const ChatBox: React.FC<{
 
       <input
         type="text"
-        className="p-3 rounded-xl bg-chat-input-elements dark:bg-chat-input-elements-dark w-full"
+        className="h-9 sm:h-auto p-2 sm:p-3 text-xs sm:text-base rounded-xl bg-chat-input-elements dark:bg-chat-input-elements-dark w-full"
         placeholder="Say something amazing"
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -50,19 +50,19 @@ const ChatBox: React.FC<{
         }}
         disabled={!sessionKey}
       />
-      <button
-        className="p-3 bg-chat-input-elements dark:bg-chat-input-elements-dark rounded-xl"
+
+      <IconButton
+        icon={faFileUpload}
+        color={"bg-chat-input-elements-dark"}
         disabled={!sessionKey}
-      >
-        <FontAwesomeIcon icon={faFileUpload} fixedWidth />
-      </button>
-      <button
-        className="p-3 bg-chat-input-elements dark:bg-chat-input-elements-dark rounded-xl"
+      />
+
+      <IconButton
+        icon={faSmile}
+        color={"bg-chat-input-elements-dark"}
         onClick={() => setEmojiPicker(!emojiPicker)}
         disabled={!sessionKey}
-      >
-        <FontAwesomeIcon icon={faSmile} fixedWidth />
-      </button>
+      />
     </div>
   );
 };

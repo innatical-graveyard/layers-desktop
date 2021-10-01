@@ -2,6 +2,7 @@ import AddFriend from "../../components/AddFriend";
 import FriendCard from "../../components/FriendCard";
 import { trpc } from "../../util/trpc";
 import { useState } from "react";
+import { Button } from "../../components/UI/Button";
 import { serverAuthedPage } from "../../util/auth";
 
 const Friends = () => {
@@ -14,13 +15,14 @@ const Friends = () => {
       <div className="p-8 flex-1">
         <div className="flex items-center ml-3 mb-5">
           <h1 className="text-3xl font-bold">Friends</h1>
-          <button
+          <Button
             type="button"
-            className="px-3 py-2 font-bold bg-inndigo rounded-xl text-offwhite self-right ml-auto"
+            color="bg-inndigo"
             onClick={() => setAddFriend(true)}
+            className="ml-auto"
           >
             Add Friend
-          </button>
+          </Button>
         </div>
         {friends.data?.ok && (
           <>

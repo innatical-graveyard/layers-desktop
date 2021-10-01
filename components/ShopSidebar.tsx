@@ -11,6 +11,7 @@ import Link from "next/link";
 import React from "react";
 import Auth from "../util/auth";
 import CallUI from "./CallUI";
+import { IconButton } from "./UI/IconButton";
 
 const ShopSidebar = () => {
   return (
@@ -20,9 +21,11 @@ const ShopSidebar = () => {
         <Link href="/app/store/themes">
           <a>
             <div className="flex gap-3 w-full items-center">
-              <div className="rounded-xl w-9 h-9 flex items-center justify-center bg-inndigo">
-                <FontAwesomeIcon icon={faPaintBrush} />
-              </div>
+              <IconButton
+                icon={faPaintBrush}
+                color="bg-inndigo"
+                className="w-9 h-9"
+              />
               <div className="flex flex-col">
                 <p className="font-medium">Themes</p>
               </div>
@@ -32,9 +35,11 @@ const ShopSidebar = () => {
         </Link>
         <Link href="/app/shop/integrations">
           <div className="flex gap-3 w-full items-center">
-            <div className="rounded-xl w-9 h-9 flex items-center justify-center bg-secondary">
-              <FontAwesomeIcon icon={faShieldAlt} />
-            </div>
+            <IconButton
+              icon={faShieldAlt}
+              className="w-9 h-9"
+              color="bg-secondary"
+            />
             <div className="flex flex-col">
               <p className="font-medium">Integrations</p>
             </div>

@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { Fragment } from "react";
 import { client, trpc } from "../util/trpc";
+import { Button } from "./UI/Button";
 
 const AddFriend: React.FC<{ open: boolean; close: () => void }> = ({
   open,
@@ -98,13 +99,13 @@ const AddFriend: React.FC<{ open: boolean; close: () => void }> = ({
                     </div>
 
                     <div className="mt-4">
-                      <button
+                      <Button
                         type="submit"
-                        className="p-3 font-bold bg-inndigo rounded-lg text-offwhite"
+                        color="bg-inndigo"
                         disabled={isSubmitting}
                       >
                         Add Friend
-                      </button>
+                      </Button>
                     </div>
                   </Form>
                 )}

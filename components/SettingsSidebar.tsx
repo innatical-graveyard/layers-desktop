@@ -8,7 +8,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import React from "react";
 import Auth from "../util/auth";
+import { IconButton } from "./UI/IconButton";
 
 const SettingsSidebar = () => {
   const { deleteToken, setKeychain } = Auth.useContainer();
@@ -27,9 +29,11 @@ const SettingsSidebar = () => {
                   : ""
               }`}
             >
-              <div className="rounded-xl w-9 h-9 flex items-center justify-center bg-inndigo">
-                <FontAwesomeIcon icon={faUser} />
-              </div>
+              <IconButton
+                icon={faUser}
+                color={"bg-inndigo"}
+                className="w-9 h-9"
+              />
               <div className="flex flex-col">
                 <p className="font-medium">Profile</p>
               </div>
@@ -44,9 +48,11 @@ const SettingsSidebar = () => {
               : ""
           }`}
         >
-          <div className="rounded-xl w-9 h-9 flex items-center justify-center bg-secondary">
-            <FontAwesomeIcon icon={faShieldAlt} />
-          </div>
+          <IconButton
+            icon={faShieldAlt}
+            className="w-9 h-9"
+            color={"bg-secondary"}
+          />
           <div className="flex flex-col">
             <p className="font-medium">Security</p>
           </div>
@@ -59,9 +65,11 @@ const SettingsSidebar = () => {
               : ""
           }`}
         >
-          <div className="rounded-xl w-9 h-9 flex items-center justify-center bg-yellow-500">
-            <FontAwesomeIcon icon={faPaintBrush} />
-          </div>
+          <IconButton
+            icon={faPaintBrush}
+            className="w-9 h-9"
+            color={"bg-yellow-500"}
+          />
           <div className="flex flex-col">
             <p className="font-medium">Themes</p>
           </div>
@@ -74,9 +82,11 @@ const SettingsSidebar = () => {
             setKeychain(null);
           }}
         >
-          <div className="rounded-xl w-9 h-9 flex items-center justify-center bg-red-500">
-            <FontAwesomeIcon icon={faSignOutAlt} />
-          </div>
+          <IconButton
+            icon={faSignOutAlt}
+            className="w-9 h-9"
+            color={"bg-red-500"}
+          />
           <div className="flex flex-col">
             <p className="font-medium">Logout</p>
           </div>

@@ -4,10 +4,10 @@ import {
   faEllipsisH,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import { trpc } from "../util/trpc";
+import { IconButton } from "./UI/IconButton";
 
 const FriendCard: React.FC<{
   userId: string;
@@ -55,35 +55,47 @@ const FriendCard: React.FC<{
       <div className="flex ml-auto">
         {type === "friend" ? (
           <>
-            <button className="w-10 h-10 flex justify-center items-center">
-              <FontAwesomeIcon icon={faComment} onClick={messageCb} />
-            </button>
-            <button className="w-10 h-10 flex justify-center items-center">
-              <FontAwesomeIcon icon={faTimes} onClick={removeFriendCb} />
-            </button>
-            <button className="w-10 h-10 flex justify-center items-center">
-              <FontAwesomeIcon icon={faEllipsisH} />
-            </button>
+            <IconButton
+              icon={faComment}
+              onClick={messageCb}
+              color={"bg-transparent"}
+              className="w-10 h-10"
+            />
+            <IconButton
+              icon={faTimes}
+              onClick={removeFriendCb}
+              color={"bg-transparent"}
+              className="w-10 h-10"
+            />
+            <IconButton
+              icon={faEllipsisH}
+              color={"bg-transparent"}
+              className="w-10 h-10"
+            />
           </>
         ) : type === "incoming" ? (
           <>
-            <button
-              className="w-10 h-10 flex justify-center items-center"
+            <IconButton
+              icon={faCheck}
               onClick={addFriendCb}
-            >
-              <FontAwesomeIcon icon={faCheck} />
-            </button>
-            <button
-              className="w-10 h-10 flex justify-center items-center"
+              color={"bg-transparent"}
+              className="w-10 h-10"
+            />
+
+            <IconButton
+              icon={faTimes}
               onClick={removeFriendCb}
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
+              color={"bg-transparent"}
+              className="w-10 h-10"
+            />
           </>
         ) : (
-          <button className="w-10 h-10 flex justify-center items-center">
-            <FontAwesomeIcon icon={faTimes} onClick={removeFriendCb} />
-          </button>
+          <IconButton
+            icon={faTimes}
+            onClick={removeFriendCb}
+            color={"bg-transparent"}
+            className="w-10 h-10"
+          />
         )}
       </div>
     </div>
