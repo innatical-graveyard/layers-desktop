@@ -1,5 +1,9 @@
-import React, { useState } from "react";
-import { useAuthedPage } from "../../../util/auth";
+import React, { useEffect, useState } from "react";
+import ServersSidebar from "../../../components/ServersSidebar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown, faHashtag } from "@fortawesome/free-solid-svg-icons";
+import ChannelView from "../../../components/ChannelView";
+import { serverAuthedPage, useAuthedPage } from "../../../util/auth";
 import ShopSidebar from "../../../components/ShopSidebar";
 import { NavigationStack } from "../../../components/NavigationStack";
 

@@ -13,13 +13,13 @@ import Auth from "../util/auth";
 import { IconButton } from "./UI/IconButton";
 
 const SettingsSidebar = () => {
-  const { setToken, setKeychain } = Auth.useContainer();
+  const { deleteToken, setKeychain } = Auth.useContainer();
   const router = useRouter();
 
   return (
     <div className="w-72 bg-primary-sidebar dark:bg-primary-sidebar-dark p-5 h-full flex flex-col">
       <h1 className="text-2xl font-bold mb-2 ml-2">Settings</h1>
-      <div className="flex flex-col w-64 bg-primary-sidebar dark:bg-primary-sidebar-dark flex-1">
+      <div className="flex flex-col bg-primary-sidebar dark:bg-primary-sidebar-dark flex-1">
         <Link href="/app/settings/user">
           <a>
             <div
@@ -78,7 +78,7 @@ const SettingsSidebar = () => {
         <button
           className="flex gap-3 w-full items-center p-2 mt-auto"
           onClick={() => {
-            setToken(null);
+            deleteToken();
             setKeychain(null);
           }}
         >

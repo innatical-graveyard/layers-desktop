@@ -7,15 +7,14 @@ import {
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Link from "next/link";
 import * as yup from "yup";
-import { usePublicOnlyPage } from "../../util/auth";
+import Auth, { serverPublicOnlyPage, usePublicOnlyPage } from "../../util/auth";
 import { client, trpc } from "../../util/trpc";
-import Auth from "../../util/auth";
 import { Button } from "../../components/UI/Button";
 
 const Login = () => {
   usePublicOnlyPage();
 
-  const { setToken, setKeychain } = Auth.useContainer();
+  const { updateToken, setKeychain } = Auth.useContainer();
 
   const login = trpc.useMutation("users.login");
 
@@ -88,7 +87,7 @@ const Login = () => {
             }
           }
 
-          setToken(res.token);
+          updateToken(res.token);
           setKeychain(keychain);
         }}
       >

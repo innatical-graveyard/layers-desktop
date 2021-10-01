@@ -3,6 +3,7 @@ import type { App } from "../../layers-backend/resources/_app";
 import { createWSClient, wsLink } from "@trpc/client/links/wsLink";
 import { splitLink } from "@trpc/client/links/splitLink";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
+import cookies from "js-cookie";
 
 export const url = "https://api.isometric.chat";
 export const wsUrl = "wss://gateway.isometric.chat";
@@ -38,10 +39,13 @@ if (globalThis.window) {
 
 export const client = createTRPCClient<App>({
   url,
-  headers: () =>
-    localStorage.getItem("token")
+  headers: () => {
+    const token = cookies.get("token");
+
+    return token
       ? {
-          Authorization: localStorage.getItem("token") ?? undefined,
+          Authorization: token,
         }
-      : {},
+      : {};
+  },
 });

@@ -3,6 +3,7 @@ import FriendCard from "../../components/FriendCard";
 import { trpc } from "../../util/trpc";
 import { useState } from "react";
 import { Button } from "../../components/UI/Button";
+import { serverAuthedPage } from "../../util/auth";
 
 const Friends = () => {
   const friends = trpc.useQuery(["users.friends"]);

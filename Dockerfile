@@ -5,6 +5,7 @@ RUN git clone https://github.com/innatical/layers-backend.git /layers-backend
 
 WORKDIR /layers-backend
 
+ARG SENTRY_AUTH_TOKEN
 RUN yarn install --frozen-lockfile
 
 WORKDIR /app

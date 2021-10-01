@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import ChannelView from "../../../components/ChannelView";
 import MessagesSidebar from "../../../components/MessagesSidebar";
 import { NavigationStack } from "../../../components/NavigationStack";
+import { serverAuthedPage } from "../../../util/auth";
 
 const Chat = () => {
   const router = useRouter();
