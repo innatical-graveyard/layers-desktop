@@ -3,7 +3,6 @@ import ChannelView from "../../../components/ChannelView";
 import MessagesSidebar from "../../../components/MessagesSidebar";
 import { NavigationStack } from "../../../components/NavigationStack";
 import { serverAuthedPage } from "../../../util/auth";
-export const getServerSideProps = serverAuthedPage;
 
 const Chat = () => {
   const router = useRouter();
