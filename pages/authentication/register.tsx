@@ -3,9 +3,7 @@ import Link from "next/link";
 import * as yup from "yup";
 import { Keychain, SymmetricKey } from "@innatical/inncryption";
 import { trpc } from "../../util/trpc";
-import Auth, { serverPublicOnlyPage, usePublicOnlyPage } from "../../util/auth";
-
-export const getServerSideProps = serverPublicOnlyPage;
+import Auth, { usePublicOnlyPage } from "../../util/auth";
 
 const Register = () => {
   usePublicOnlyPage();

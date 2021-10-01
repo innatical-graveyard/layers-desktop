@@ -6,7 +6,6 @@ import ChannelView from "../../../components/ChannelView";
 import { serverAuthedPage, useAuthedPage } from "../../../util/auth";
 import ShopSidebar from "../../../components/ShopSidebar";
 import { NavigationStack } from "../../../components/NavigationStack";
-export const getServerSideProps = serverAuthedPage;
 
 const Store = () => {
   useAuthedPage();

@@ -5,7 +5,6 @@ import { faChevronDown, faHashtag } from "@fortawesome/free-solid-svg-icons";
 import ChannelView from "../../../components/ChannelView";
 import { serverAuthedPage, useAuthedPage } from "../../../util/auth";
 import ShopSidebar from "../../../components/ShopSidebar";
-export const getServerSideProps = serverAuthedPage;
 
 const Store = () => {
   useAuthedPage();

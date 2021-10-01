@@ -5,8 +5,6 @@ import { faChevronDown, faHashtag } from "@fortawesome/free-solid-svg-icons";
 import ChannelView from "../../components/ChannelView";
 import { serverAuthedPage, useAuthedPage } from "../../util/auth";
 
-export const getServerSideProps = serverAuthedPage;
-
 const Servers = () => {
   useAuthedPage();
   const [selected, setSelected] = useState<string>("general");

@@ -1,11 +1,4 @@
 import { useRouter } from "next/router";
-import { GetServerSideProps } from "next";
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    redirect: { destination: "/authentication/login", permanent: false },
-  };
-};
 
 const Redirect = () => {
   const router = useRouter();
