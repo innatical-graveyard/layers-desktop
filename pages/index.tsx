@@ -30,28 +30,20 @@ const Home = () => {
 
   return (
     <div className="h-screen flex flex-col relative">
-      <div className="p-20 flex">
+      <div className="backdrop-filter backdrop-blur-3xl absolute top-0 left-0 right-0 bottom-0 z-10" />
+      <div className="p-20 flex z-20">
         <div>
-          <h1 className="text-5xl font-bold">Isometric</h1>
-          <h2 className="text-3xl text-inndigo mb-2">{tagline}</h2>
-          <Link href="/authentication/register">
-            <a className="text-xl flex items-center">
-              Join us <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
-            </a>
-          </Link>
-          <svg
-            viewBox="0 0 200 200"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-72 mt-10 ml-32"
-          >
-            <path
-              fill="#1E6FEB"
-              d="M55.5,-40.5C69.9,-26.1,78.3,-3.2,75,19.4C71.7,42,56.6,64.2,37.3,70.9C18,77.7,-5.5,69,-23.3,57.1C-41.1,45.2,-53,30,-61.1,9.7C-69.2,-10.7,-73.3,-36.2,-62.4,-49.8C-51.6,-63.4,-25.8,-65,-2.6,-62.9C20.5,-60.8,41,-54.9,55.5,-40.5Z"
-              transform="translate(100 100)"
-            />
-          </svg>
+          <div className="z-20">
+            <h1 className="text-5xl font-bold">Isometric</h1>
+            <h2 className="text-3xl text-inndigo mb-2">{tagline}</h2>
+            <Link href="/authentication/register">
+              <a className="text-xl flex items-center">
+                Join us <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
+              </a>
+            </Link>
+          </div>
         </div>
-        <div className="flex-1">
+        <div className="flex-1 z-20">
           <div className="ml-auto" style={{ width: "32rem" }}>
             <Tilt>
               <img src="preview.png" className="h-auto" />
@@ -59,7 +51,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="absolute bottom-0 left-0 right-0 z-0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
           <path
             fill="#1e6feb"
