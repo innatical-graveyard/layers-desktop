@@ -52,7 +52,7 @@ const Home = () => {
           </svg>
         </div>
         <div className="flex-1">
-          <div className="w-7/12 ml-auto">
+          <div className="ml-auto" style={{ width: "32rem" }}>
             <Tilt>
               <img src="preview.png" className="h-auto" />
             </Tilt>
