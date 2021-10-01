@@ -12,6 +12,7 @@ import {
 import { useAsync } from "react-use";
 import Auth from "../util/auth";
 import { useQuery } from "react-query";
+import { useMarkdownPresets } from "../util/hooks";
 
 const MessageCard: React.FC<{
   userId: string;
@@ -86,6 +87,12 @@ const MessageCard: React.FC<{
     },
   });
 
+  const content = useMarkdownPresets(
+    message.data === false
+      ? "*This message could not be decrypted or verfiied*"
+      : message.data ?? ""
+  );
+
   return (
     <Link href={"/app/messages/" + channelId}>
       <a className="hover:bg-sidebar dark:hover:bg-sidebar-dark rounded-xl">
@@ -118,9 +125,11 @@ const MessageCard: React.FC<{
             <p className="font-light text-xs leading-none truncate w-32">
               {message.data &&
               me.data?.ok &&
-              lastMessage?.author === me.data.user.id
-                ? "You: " + message.data
-                : message.data}
+              lastMessage?.author === me.data.user.id ? (
+                <>You: {content}</>
+              ) : (
+                content
+              )}
             </p>
           </div>
           <FontAwesomeIcon icon={faChevronRight} className="ml-auto mr-3" />

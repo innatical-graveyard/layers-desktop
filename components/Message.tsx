@@ -9,6 +9,8 @@ import calendar from "dayjs/plugin/calendar";
 import { useMemo } from "react";
 import { useQuery } from "react-query";
 import { trpc } from "../util/trpc";
+import useMarkdown from "@innatical/markdown";
+import { useMarkdownPresets } from "../util/hooks";
 
 dayjs.extend(calendar);
 
@@ -54,6 +56,12 @@ const Message: React.FC<{
     []
   );
 
+  const content = useMarkdownPresets(
+    message.data === false
+      ? "*This message could not be decrypted or verfiied*"
+      : message.data ?? ""
+  );
+
   return (
     <div className={primary ? "flex gap-4 mt-3 w-full" : "flex gap-4 w-full"}>
       {primary &&
@@ -89,11 +97,7 @@ const Message: React.FC<{
           </>
         )}
         {message.data !== undefined ? (
-          message.data === false ? (
-            <i>This message could not be decrypted or verfiied</i>
-          ) : (
-            <p>{message.data}</p>
-          )
+          content
         ) : (
           <div
             className="h-5 animate-pulse rounded bg-placeholder dark:bg-placeholder-dark"
