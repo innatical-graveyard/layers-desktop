@@ -15,16 +15,19 @@ const Store = () => {
       <>
         <NavigationStack
           mainContent={({ backButton: BackButton }) => (
-            <div>
-              <div className="flex p-12">
+            <div className="p-8 overflow-hidden">
+              <div className="flex mb-2">
                 {BackButton && <BackButton />}
-                <h1 className="text-6xl font-bold"> Themes</h1>
+                <h1 className="text-2xl ml-2 sm:ml-0 sm:text-6xl font-bold">
+                  {" "}
+                  Themes
+                </h1>
               </div>
 
-              <p className="text-2xl font-bold px-12 pt-12">Popular Themes</p>
-              <div className="p-12 flex flex-row ">
+              <p className="text-xl font-bold mb-2 sm:mb-3">Popular Themes</p>
+              <div className="flex flex-row overflow-x-auto">
                 {/* Card #1 */}
-                <div className="w-64 bg-primary-sidebar-dark rounded overflow-hidden shadow-lg">
+                <div className="w-64 flex-shrink-0 bg-primary-sidebar-dark rounded overflow-hidden shadow-lg">
                   <img
                     className="w-full"
                     src="https://thumbs.dreamstime.com/b/demo-computer-key-to-download-version-software-trial-64543995.jpg"
@@ -39,7 +42,7 @@ const Store = () => {
                   </div>
                 </div>
                 {/* Card #2 */}
-                <div className="w-64 ml-12 bg-primary-sidebar-dark rounded overflow-hidden shadow-lg">
+                <div className="w-64 flex-shrink-0 ml-12 bg-primary-sidebar-dark rounded overflow-hidden shadow-lg">
                   <img
                     className="w-full"
                     src="https://thumbs.dreamstime.com/b/demo-computer-key-to-download-version-software-trial-64543995.jpg"
@@ -54,7 +57,7 @@ const Store = () => {
                   </div>
                 </div>
                 {/* Card #3 */}
-                <div className="w-64 ml-12 bg-primary-sidebar-dark rounded overflow-hidden shadow-lg">
+                <div className="w-64 flex-shrink-0 ml-12 bg-primary-sidebar-dark rounded overflow-hidden shadow-lg">
                   <img
                     className="w-full"
                     src="https://thumbs.dreamstime.com/b/demo-computer-key-to-download-version-software-trial-64543995.jpg"
@@ -69,7 +72,7 @@ const Store = () => {
                   </div>
                 </div>
                 {/* Card #4 */}
-                <div className="w-64 ml-12 bg-primary-sidebar-dark rounded overflow-hidden shadow-lg">
+                <div className="w-64 flex-shrink-0 ml-12 bg-primary-sidebar-dark rounded overflow-hidden shadow-lg">
                   <img
                     className="w-full"
                     src="https://thumbs.dreamstime.com/b/demo-computer-key-to-download-version-software-trial-64543995.jpg"
