@@ -107,7 +107,7 @@ const Register = () => {
 
             <Button
               type="submit"
-              className="rounded-lg"
+              className="rounded-lg mt-8 mb-3"
               height="tall"
               color="bg-inndigo"
               disabled={isSubmitting}

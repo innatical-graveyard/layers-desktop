@@ -33,7 +33,7 @@ const ChatBox: React.FC<{
 
       <input
         type="text"
-        className="p-1 sm:p-3 text-xss sm:text-base rounded-xl bg-chat-input-elements dark:bg-chat-input-elements-dark w-full"
+        className="h-9 sm:h-auto p-2 sm:p-3 text-xs sm:text-base rounded-xl bg-chat-input-elements dark:bg-chat-input-elements-dark w-full"
         placeholder="Say something amazing"
         value={text}
         onChange={(e) => setText(e.target.value)}
