@@ -1,5 +1,6 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
+import { IconButton } from "./UI/IconButton";
 
 const ServersSidebar = () => {
   return (
@@ -38,9 +39,11 @@ const ServersSidebar = () => {
         className="rounded-xl object-cover w-12 h-12"
       />
 
-      <div className="rounded-xl w-12 h-12 bg-primary-sidebar dark:bg-primary-sidebar-dark flex justify-center items-center text-lg mt-auto">
-        <FontAwesomeIcon icon={faPlus} />
-      </div>
+      <IconButton
+        icon={faPlus}
+        color={"bg-chat-input-elements-dark"}
+        className="w-12 h-12 mt-auto"
+      />
     </div>
   );
 };

@@ -1,9 +1,9 @@
 import { faPhone, faPhoneSlash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment } from "react";
 import { trpc } from "../util/trpc";
 import Voice from "../util/voice";
+import { IconButton } from "./UI/IconButton";
 
 const RingingModal = () => {
   const { ringing, decline, acceptDMCall } = Voice.useContainer();
@@ -79,20 +79,17 @@ const RingingModal = () => {
                 <h1>{user.data?.ok ? user.data.user.username : ""}</h1>
 
                 <div className="mt-4 flex w-full gap-3">
-                  <button
-                    type="button"
-                    className="bg-danger p-2 rounded-lg flex-1"
+                  <IconButton
+                    icon={faPhoneSlash}
                     onClick={decline}
-                  >
-                    <FontAwesomeIcon icon={faPhoneSlash} />
-                  </button>
-                  <button
-                    type="button"
-                    className="bg-inndigo p-2 rounded-lg flex-1"
+                    color={"bg-danger"}
+                  />
+
+                  <IconButton
+                    icon={faPhone}
                     onClick={() => acceptDMCall({ channelID: ringing! })}
-                  >
-                    <FontAwesomeIcon icon={faPhone} />
-                  </button>
+                    color={"bg-inndigo"}
+                  />
                 </div>
               </div>
             </div>

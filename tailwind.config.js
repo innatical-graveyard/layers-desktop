@@ -1,3 +1,5 @@
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: "media", // or 'media' or 'class'
@@ -73,5 +75,20 @@ module.exports = {
       backgroundColor: ["odd"],
     },
   },
-  plugins: [],
+  plugins: [
+    // Provides an aspect ratio implementation for tailwind
+    plugin(function ({ addUtilities }) {
+      let ratios = {};
+
+      for (let i = 1; i <= 16; i++) {
+        for (let j = 1; j <= 16; j++) {
+          ratios[`.ratio-${i}-${j}`] = {
+            aspectRatio: `${i}/${j}`,
+          };
+        }
+      }
+
+      addUtilities(ratios);
+    }),
+  ],
 };
