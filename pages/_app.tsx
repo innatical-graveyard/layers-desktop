@@ -11,6 +11,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import React from "react";
 import RingingModal from "../components/RingingModal";
 import CurrentUser from "../util/currentUser";
+import Cookies from "js-cookie";
 
 const Layers = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -40,10 +41,10 @@ export default withTRPC<App>({
     return {
       links,
       headers() {
-        const token = localStorage.getItem("token");
+        const token = Cookies.get("token");
         return token ? { Authorization: token } : {};
       },
     };
   },
-  ssr: false,
+  ssr: true,
 })(Layers);

@@ -1,19 +1,13 @@
 import { Keychain } from "@innatical/inncryption";
 import { createContainer } from "@innatical/innstate";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useCookie } from "react-use";
 
 const useAuth = () => {
-  const [token, setToken] = useState<string | null>();
+  const [token, updateToken, deleteToken] = useCookie("token");
   const [keychain, setKeychain] = useState<Keychain | null>();
-
-  useEffect(() => {
-    if (token) {
-      localStorage.setItem("token", token);
-    } else if (keychain === null) {
-      localStorage.removeItem("token");
-    }
-  }, [token]);
 
   useEffect(() => {
     (async () => {
@@ -30,34 +24,59 @@ const useAuth = () => {
 
   useEffect(() => {
     (async () => {
-      const token = localStorage.getItem("token");
       const keychain = localStorage.getItem("keychain");
 
-      if (token) setToken(token);
       if (keychain)
         setKeychain(await Keychain.fromJWKChain(JSON.parse(keychain)));
     })();
   }, []);
 
-  return { token, setToken, keychain, setKeychain };
+  return { token, keychain, setKeychain, updateToken, deleteToken };
 };
 
 const Auth = createContainer(useAuth);
 
 export const useAuthedPage = () => {
-  const { token, keychain } = Auth.useContainer();
+  const { token } = Auth.useContainer();
   const router = useRouter();
-  useEffect(() => {
-    if (!(token && keychain)) router.replace("/authentication/login");
-  }, [token, keychain]);
+  if (!token && typeof window !== "undefined")
+    router.replace("/authentication/login");
 };
 
 export const usePublicOnlyPage = () => {
-  const { token, keychain } = Auth.useContainer();
+  const { token } = Auth.useContainer();
   const router = useRouter();
-  useEffect(() => {
-    if (token && keychain) router.replace("/app/messages");
-  }, [token, keychain]);
+  if (token && typeof window !== "undefined") router.replace("/app/messages");
+};
+
+export const serverAuthedPage: GetServerSideProps = async (ctx) => {
+  if (!ctx.req.cookies.token) {
+    return {
+      redirect: {
+        destination: "/authentication/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
+
+export const serverPublicOnlyPage: GetServerSideProps = async (ctx) => {
+  if (ctx.req.cookies.token) {
+    return {
+      redirect: {
+        destination: "/app/messages",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default Auth;

@@ -1,11 +1,8 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 const Redirect = () => {
   const router = useRouter();
-  useEffect(() => {
-    router.replace("/authentication/login");
-  }, []);
+  if (typeof window !== "undefined") router.replace("/authentication/login");
   return <></>;
 };
 

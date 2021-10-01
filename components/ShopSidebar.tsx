@@ -14,8 +14,6 @@ import CallUI from "./CallUI";
 import { IconButton } from "./UI/IconButton";
 
 const ShopSidebar = () => {
-  const { setToken, setKeychain } = Auth.useContainer();
-
   return (
     <div className="w-72 bg-primary-sidebar dark:bg-primary-sidebar-dark p-5 h-full flex flex-col">
       <h1 className="text-2xl font-bold mb-5">Isometric Shop</h1>

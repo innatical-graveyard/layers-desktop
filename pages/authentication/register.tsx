@@ -10,7 +10,7 @@ import { Button } from "../../components/UI/Button";
 const Register = () => {
   usePublicOnlyPage();
 
-  const { setToken, setKeychain } = Auth.useContainer();
+  const { updateToken, setKeychain } = Auth.useContainer();
   const register = trpc.useMutation("users.register");
 
   return (
@@ -58,7 +58,7 @@ const Register = () => {
                 return;
             }
           }
-          setToken(res.token);
+          updateToken(res.token);
           setKeychain(keychain);
         }}
       >
