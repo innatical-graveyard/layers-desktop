@@ -42,7 +42,7 @@ const Home = () => {
           <svg
             viewBox="0 0 200 200"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-8/12 mt-10 ml-auto"
+            className="w-72 mt-10 ml-32"
           >
             <path
               fill="#1E6FEB"
