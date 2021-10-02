@@ -34,7 +34,7 @@ const User = () => {
       sidebar={SettingsSidebar}
       backUrl="/app/settings"
       mainContent={({ backButton: BackButton }) => (
-        <div className="p-3 sm:m-auto sm:w-1/3">
+        <div className="p-3 sm:m-auto w-full sm:w-1/3">
           <div className="flex mb-2">
             <BackButton />
             <h1 className="ml-2 font-bold text-2xl">Profile</h1>
