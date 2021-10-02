@@ -17,7 +17,7 @@ const ShopSidebar = () => {
   return (
     <div className="w-full sm:w-72 bg-primary-sidebar dark:bg-primary-sidebar-dark p-5 h-full flex flex-col">
       <h1 className="text-2xl font-bold mb-5">Isometric Shop</h1>
-      <div className="flex flex-col gap-5 w-64 bg-primary-sidebar dark:bg-primary-sidebar-dark flex-1 relative">
+      <div className="flex flex-col gap-5 w-full bg-primary-sidebar dark:bg-primary-sidebar-dark flex-1 relative">
         <Link href="/app/store/themes">
           <a>
             <div className="flex gap-3 w-full items-center">
