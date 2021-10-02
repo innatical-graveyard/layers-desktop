@@ -31,7 +31,7 @@ export const IconButton: FC<{
     className || ""
   } p-3 ${color} rounded-xl flex justify-center items-center ${
     className?.includes("h-") ? "" : "h-full"
-  } w-9 h-9 sm:w-12 sm:h-12`;
+  } ${className?.includes("w-") ? "" : "w-9 sm:w-12"}`;
 
   if (typeof enforceAspectRatio === "undefined" || enforceAspectRatio) {
     classes += " ratio-1-1";
