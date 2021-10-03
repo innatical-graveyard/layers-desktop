@@ -22,11 +22,13 @@ const ChannelView: React.FC<{
       "users.user",
       {
         id:
-          channel.data?.ok && channel.data.type === "DM" ? channel.data.to : "",
+          !!channel.data?.ok && channel.data.type === "DM"
+            ? channel.data.to
+            : "",
       },
     ],
     {
-      enabled: channel.data?.ok && channel.data.type === "DM",
+      enabled: !!channel.data?.ok && channel.data.type === "DM",
     }
   );
 
@@ -140,6 +142,7 @@ const ChannelView: React.FC<{
           messagesList?.map((message, index) => (
             <Message
               {...message}
+              key={message.id}
               sessionKey={sessionKey.value!}
               primary={
                 index < messagesList.length - 1 &&

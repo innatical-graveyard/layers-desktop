@@ -36,10 +36,11 @@ const Home = () => {
           <div className="z-20">
             <h1 className="text-5xl font-bold">Isometric</h1>
             <h2 className="text-3xl text-inndigo mb-2">{tagline}</h2>
-            <Link to="/authentication/register">
-              <a className="text-xl flex items-center">
-                Join us <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
-              </a>
+            <Link
+              to="/authentication/register"
+              className="text-xl flex items-center"
+            >
+              Join us <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
             </Link>
           </div>
         </div>

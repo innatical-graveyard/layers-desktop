@@ -19,19 +19,17 @@ const ShopSidebar = () => {
       <h1 className="text-2xl font-bold mb-5">Isometric Shop</h1>
       <div className="flex flex-col gap-5 w-64 bg-primary-sidebar dark:bg-primary-sidebar-dark flex-1 relative">
         <Link to="/app/store/themes">
-          <a>
-            <div className="flex gap-3 w-full items-center">
-              <IconButton
-                icon={faPaintBrush}
-                color="bg-inndigo"
-                className="w-9 h-9"
-              />
-              <div className="flex flex-col">
-                <p className="font-medium">Themes</p>
-              </div>
-              <FontAwesomeIcon icon={faChevronRight} className="ml-auto mr-3" />
+          <div className="flex gap-3 w-full items-center">
+            <IconButton
+              icon={faPaintBrush}
+              color="bg-inndigo"
+              className="w-9 h-9"
+            />
+            <div className="flex flex-col">
+              <p className="font-medium">Themes</p>
             </div>
-          </a>
+            <FontAwesomeIcon icon={faChevronRight} className="ml-auto mr-3" />
+          </div>
         </Link>
         <Link to="/app/shop/integrations">
           <div className="flex gap-3 w-full items-center">

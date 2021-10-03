@@ -36,55 +36,45 @@ const Sidebar = () => {
         ></motion.div>
         <div className="flex flex-col text-secondary text-2xl items-center gap-18 my-auto">
           <Link to="/app/messages">
-            <a className="cursor-pointer">
-              <FontAwesomeIcon
-                icon={faPaperPlane}
-                className={
-                  location.pathname.startsWith("/app/messages")
-                    ? "text-inndigo"
-                    : ""
-                }
-              />
-            </a>
+            <FontAwesomeIcon
+              icon={faPaperPlane}
+              className={
+                location.pathname.startsWith("/app/messages")
+                  ? "text-inndigo"
+                  : ""
+              }
+            />
           </Link>
           <Link to="/app/servers">
-            <a className="cursor-pointer">
-              <FontAwesomeIcon
-                icon={faServer}
-                className={
-                  location.pathname === "/app/servers" ? "text-inndigo" : ""
-                }
-              />
-            </a>
+            <FontAwesomeIcon
+              icon={faServer}
+              className={
+                location.pathname === "/app/servers" ? "text-inndigo" : ""
+              }
+            />
           </Link>
           <Link to="/app/friends">
-            <a className="cursor-pointer">
-              <FontAwesomeIcon
-                icon={faUsers}
-                className={
-                  location.pathname === "/app/friends" ? "text-inndigo" : ""
-                }
-              />
-            </a>
+            <FontAwesomeIcon
+              icon={faUsers}
+              className={
+                location.pathname === "/app/friends" ? "text-inndigo" : ""
+              }
+            />
           </Link>
           <Link to="/app/store">
-            <a className="ursor-pointer">
-              <FontAwesomeIcon
-                icon={faStore}
-                className={
-                  location.pathname === "/app/store" ? "text-inndigo" : ""
-                }
-              />
-            </a>
+            <FontAwesomeIcon
+              icon={faStore}
+              className={
+                location.pathname === "/app/store" ? "text-inndigo" : ""
+              }
+            />
           </Link>
         </div>
         <Link to="/app/settings">
-          <a className="cursor-pointer">
-            <img
-              src={query.data?.ok ? query.data.user.avatar : ""}
-              className="rounded-lg object-cover w-10 h-10 mb-5"
-            />
-          </a>
+          <img
+            src={query.data?.ok ? query.data.user.avatar : ""}
+            className="rounded-lg object-cover w-10 h-10 mb-5"
+          />
         </Link>
       </div>
     </div>

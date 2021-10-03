@@ -38,14 +38,20 @@ const Auth = createContainer(useAuth);
 export const useAuthedPage = () => {
   const { token } = Auth.useContainer();
   const history = useHistory();
-  if (!token && typeof window !== "undefined")
-    history.replace("/authentication/login");
+  useEffect(() => {
+    if (!token && typeof window !== "undefined")
+      history.replace("/authentication/login");
+  }, [token, history]);
 };
 
 export const usePublicOnlyPage = () => {
   const { token } = Auth.useContainer();
   const history = useHistory();
-  if (token && typeof window !== "undefined") history.replace("/app/messages");
+
+  useEffect(() => {
+    if (token && typeof window !== "undefined")
+      history.replace("/app/messages");
+  }, [token, history]);
 };
 
 export default Auth;

@@ -95,7 +95,7 @@ const MessageCard: React.FC<{
 
   return (
     <Link to={"/app/messages/" + channelId}>
-      <a className="hover:bg-sidebar dark:hover:bg-sidebar-dark rounded-xl">
+      <div className="hover:bg-sidebar dark:hover:bg-sidebar-dark rounded-xl">
         <div
           className={
             location.pathname === "/app/messages/" + channelId
@@ -134,7 +134,7 @@ const MessageCard: React.FC<{
           </div>
           <FontAwesomeIcon icon={faChevronRight} className="ml-auto mr-3" />
         </div>
-      </a>
+      </div>
     </Link>
   );
 };

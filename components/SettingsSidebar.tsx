@@ -21,25 +21,23 @@ const SettingsSidebar = () => {
       <h1 className="text-2xl font-bold mb-2 ml-2">Settings</h1>
       <div className="flex flex-col bg-primary-sidebar dark:bg-primary-sidebar-dark flex-1">
         <Link to="/app/settings/user">
-          <a>
-            <div
-              className={`flex gap-3 w-full items-center p-2 rounded-xl ${
-                location.pathname.startsWith("/app/settings/user")
-                  ? "bg-primary-sidebar-selected dark:bg-primary-sidebar-selected-dark"
-                  : ""
-              }`}
-            >
-              <IconButton
-                icon={faUser}
-                color={"bg-inndigo"}
-                className="w-9 h-9"
-              />
-              <div className="flex flex-col">
-                <p className="font-medium">Profile</p>
-              </div>
-              <FontAwesomeIcon icon={faChevronRight} className="ml-auto mr-3" />
+          <div
+            className={`flex gap-3 w-full items-center p-2 rounded-xl ${
+              location.pathname.startsWith("/app/settings/user")
+                ? "bg-primary-sidebar-selected dark:bg-primary-sidebar-selected-dark"
+                : ""
+            }`}
+          >
+            <IconButton
+              icon={faUser}
+              color={"bg-inndigo"}
+              className="w-9 h-9"
+            />
+            <div className="flex flex-col">
+              <p className="font-medium">Profile</p>
             </div>
-          </a>
+            <FontAwesomeIcon icon={faChevronRight} className="ml-auto mr-3" />
+          </div>
         </Link>
         <div
           className={`flex gap-3 w-full items-center p-2 rounded-xl ${
